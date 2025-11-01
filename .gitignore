@@ -11,8 +11,7 @@ ENV/
 dist/
 build/
 
-frontend/
-backend/
+
 docs/
 
 # Database
