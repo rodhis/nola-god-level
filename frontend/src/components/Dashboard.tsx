@@ -3,7 +3,7 @@ import { FilterBar } from './FilterBar'
 import { MetricCard } from './MetricCard'
 import { Chart } from './Chart'
 import { analyticsApi } from '../services/api'
-import { Filters, OverviewMetrics, Product, Channel, TimeSeriesData, HourlyData, WeekdayData } from '../types'
+import { Filters, OverviewMetrics, Product, Channel, TimeSeriesData, HourlyData, WeekdayData } from '../interfaces'
 import './Dashboard.css'
 
 const WEEKDAY_NAMES = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']

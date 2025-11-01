@@ -8,7 +8,7 @@ import {
     HourlyData,
     WeekdayData,
     Customization,
-} from '../types'
+} from '../interfaces'
 
 const API_BASE = '/api'
 

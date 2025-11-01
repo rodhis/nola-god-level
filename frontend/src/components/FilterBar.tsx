@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Store, Channel } from '../types'
+import { Store, Channel } from '../interfaces'
 import { filtersApi } from '../services/api'
 import './FilterBar.css'
 
