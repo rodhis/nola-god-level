@@ -156,7 +156,7 @@ open http://localhost:3000
 ```bash
 cd backend
 npm install
-cp .env.example .env
+# Crie um arquivo .env com as credenciais do banco
 npm run dev
 ```
 

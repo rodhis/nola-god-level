@@ -382,8 +382,13 @@ cd backend
 npm install
 
 # Configurar variáveis de ambiente
-cp .env.example .env
-# Edite .env com suas credenciais do PostgreSQL
+# Crie um arquivo .env com suas credenciais do PostgreSQL
+# Exemplo:
+# DB_HOST=localhost
+# DB_PORT=5432
+# DB_NAME=nola_restaurant
+# DB_USER=postgres
+# DB_PASSWORD=postgres
 
 # Iniciar em modo desenvolvimento (hot reload)
 npm run dev

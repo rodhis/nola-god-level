@@ -49,7 +49,12 @@ docker-compose up postgres -d
 ```bash
 cd backend
 npm install
-cp .env.example .env
+# Crie um arquivo .env com as credenciais do banco de dados
+# DB_HOST=localhost
+# DB_PORT=5432
+# DB_NAME=nola_restaurant
+# DB_USER=postgres
+# DB_PASSWORD=postgres
 npm run dev
 ```
 

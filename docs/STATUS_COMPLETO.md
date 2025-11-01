@@ -21,7 +21,7 @@ nola-god-level/
 │   ├── package.json            # Dependencies
 │   ├── tsconfig.json           # TypeScript config
 │   ├── Dockerfile              # Container config
-│   ├── .env.example            # Environment variables template
+│   ├── .env                    # Environment variables
 │   └── .gitignore
 │
 ├── frontend/                   ✅ COMPLETO
