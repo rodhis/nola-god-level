@@ -2,16 +2,25 @@ import { Request, Response } from 'express'
 import analyticsService from '../services/analyticsService'
 
 /**
+ * Helper function to safely parse integer parameters
+ */
+function parseIntSafe(value: unknown): number | undefined {
+    if (typeof value !== 'string') return undefined
+    const parsed = parseInt(value, 10)
+    return isNaN(parsed) ? undefined : parsed
+}
+
+/**
  * AnalyticsController - Handles HTTP requests for analytics endpoints
  */
 export class AnalyticsController {
     async getOverview(req: Request, res: Response) {
         try {
             const filters = {
-                startDate: req.query.startDate as string,
-                endDate: req.query.endDate as string,
-                storeId: req.query.storeId ? parseInt(req.query.storeId as string) : undefined,
-                channelId: req.query.channelId ? parseInt(req.query.channelId as string) : undefined,
+                startDate: req.query.startDate as string | undefined,
+                endDate: req.query.endDate as string | undefined,
+                storeId: parseIntSafe(req.query.storeId),
+                channelId: parseIntSafe(req.query.channelId),
             }
 
             const metrics = await analyticsService.getOverviewMetrics(filters)
@@ -25,12 +34,12 @@ export class AnalyticsController {
     async getTopProducts(req: Request, res: Response) {
         try {
             const filters = {
-                startDate: req.query.startDate as string,
-                endDate: req.query.endDate as string,
-                storeId: req.query.storeId ? parseInt(req.query.storeId as string) : undefined,
-                channelId: req.query.channelId ? parseInt(req.query.channelId as string) : undefined,
+                startDate: req.query.startDate as string | undefined,
+                endDate: req.query.endDate as string | undefined,
+                storeId: parseIntSafe(req.query.storeId),
+                channelId: parseIntSafe(req.query.channelId),
             }
-            const limit = req.query.limit ? parseInt(req.query.limit as string) : 10
+            const limit = parseIntSafe(req.query.limit) || 10
 
             const products = await analyticsService.getTopProducts(filters, limit)
             res.json(products)
@@ -43,8 +52,8 @@ export class AnalyticsController {
     async getSalesByChannel(req: Request, res: Response) {
         try {
             const filters = {
-                startDate: req.query.startDate as string,
-                endDate: req.query.endDate as string,
+                startDate: req.query.startDate as string | undefined,
+                endDate: req.query.endDate as string | undefined,
             }
 
             const channels = await analyticsService.getSalesByChannel(filters)
@@ -58,10 +67,10 @@ export class AnalyticsController {
     async getSalesTimeSeries(req: Request, res: Response) {
         try {
             const filters = {
-                startDate: req.query.startDate as string,
-                endDate: req.query.endDate as string,
-                storeId: req.query.storeId ? parseInt(req.query.storeId as string) : undefined,
-                channelId: req.query.channelId ? parseInt(req.query.channelId as string) : undefined,
+                startDate: req.query.startDate as string | undefined,
+                endDate: req.query.endDate as string | undefined,
+                storeId: parseIntSafe(req.query.storeId),
+                channelId: parseIntSafe(req.query.channelId),
             }
 
             const timeSeries = await analyticsService.getSalesTimeSeries(filters)
@@ -75,10 +84,10 @@ export class AnalyticsController {
     async getSalesByHour(req: Request, res: Response) {
         try {
             const filters = {
-                startDate: req.query.startDate as string,
-                endDate: req.query.endDate as string,
-                storeId: req.query.storeId ? parseInt(req.query.storeId as string) : undefined,
-                channelId: req.query.channelId ? parseInt(req.query.channelId as string) : undefined,
+                startDate: req.query.startDate as string | undefined,
+                endDate: req.query.endDate as string | undefined,
+                storeId: parseIntSafe(req.query.storeId),
+                channelId: parseIntSafe(req.query.channelId),
             }
 
             const hourlyData = await analyticsService.getSalesByHour(filters)
@@ -92,10 +101,10 @@ export class AnalyticsController {
     async getSalesByWeekday(req: Request, res: Response) {
         try {
             const filters = {
-                startDate: req.query.startDate as string,
-                endDate: req.query.endDate as string,
-                storeId: req.query.storeId ? parseInt(req.query.storeId as string) : undefined,
-                channelId: req.query.channelId ? parseInt(req.query.channelId as string) : undefined,
+                startDate: req.query.startDate as string | undefined,
+                endDate: req.query.endDate as string | undefined,
+                storeId: parseIntSafe(req.query.storeId),
+                channelId: parseIntSafe(req.query.channelId),
             }
 
             const weekdayData = await analyticsService.getSalesByWeekday(filters)
@@ -109,10 +118,10 @@ export class AnalyticsController {
     async getTopStores(req: Request, res: Response) {
         try {
             const filters = {
-                startDate: req.query.startDate as string,
-                endDate: req.query.endDate as string,
+                startDate: req.query.startDate as string | undefined,
+                endDate: req.query.endDate as string | undefined,
             }
-            const limit = req.query.limit ? parseInt(req.query.limit as string) : 10
+            const limit = parseIntSafe(req.query.limit) || 10
 
             const stores = await analyticsService.getTopStores(filters, limit)
             res.json(stores)
@@ -125,12 +134,12 @@ export class AnalyticsController {
     async getTopCustomizations(req: Request, res: Response) {
         try {
             const filters = {
-                startDate: req.query.startDate as string,
-                endDate: req.query.endDate as string,
-                storeId: req.query.storeId ? parseInt(req.query.storeId as string) : undefined,
-                channelId: req.query.channelId ? parseInt(req.query.channelId as string) : undefined,
+                startDate: req.query.startDate as string | undefined,
+                endDate: req.query.endDate as string | undefined,
+                storeId: parseIntSafe(req.query.storeId),
+                channelId: parseIntSafe(req.query.channelId),
             }
-            const limit = req.query.limit ? parseInt(req.query.limit as string) : 10
+            const limit = parseIntSafe(req.query.limit) || 10
 
             const customizations = await analyticsService.getTopCustomizations(filters, limit)
             res.json(customizations)
