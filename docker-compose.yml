@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+    postgres:
+        image: postgres:15
+        container_name: godlevel-db
+        environment:
+            POSTGRES_DB: nola_restaurant
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+        ports:
+            - '5432:5432'
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+            - ./database-schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+        healthcheck:
+            test: ['CMD-SHELL', 'pg_isready -U postgres -d nola_restaurant']
+            interval: 5s
+            timeout: 5s
+            retries: 5
+
+    backend:
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+        container_name: nola-backend
+        depends_on:
+            postgres:
+                condition: service_healthy
+        environment:
+            PORT: 3001
+            DB_HOST: postgres
+            DB_PORT: 5432
+            DB_NAME: nola_restaurant
+            DB_USER: postgres
+            DB_PASSWORD: postgres
+            NODE_ENV: production
+        ports:
+            - '3001:3001'
+        restart: unless-stopped
+
+    frontend:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+        container_name: nola-frontend
+        depends_on:
+            - backend
+        ports:
+            - '3000:3000'
+        environment:
+            VITE_API_URL: http://localhost:3001
+        restart: unless-stopped
+
+    data-generator:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: godlevel-data-gen
+        depends_on:
+            postgres:
+                condition: service_healthy
+        environment:
+            DATABASE_URL: postgresql://postgres:postgres@postgres:5432/nola_restaurant
+        command: >
+            sh -c "
+              echo 'Waiting for database to be ready...' &&
+              sleep 5 &&
+              echo 'Generating challenge data...' &&
+              python generate_data.py --db-url postgresql://postgres:postgres@postgres:5432/nola_restaurant
+            "
+        profiles:
+            - tools
+
+    pgadmin:
+        image: dpage/pgadmin4:latest
+        container_name: godlevel-pgadmin
+        environment:
+            PGADMIN_DEFAULT_EMAIL: admin@godlevel.com
+            PGADMIN_DEFAULT_PASSWORD: admin
+            PGADMIN_CONFIG_SERVER_MODE: 'False'
+        ports:
+            - '5050:80'
+        depends_on:
+            - postgres
+        profiles:
+            - tools
+
+volumes:
+    postgres_data:
+        driver: local
