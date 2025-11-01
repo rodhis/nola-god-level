@@ -15,8 +15,8 @@ import {
 } from 'recharts'
 import './Chart.css'
 
-interface ChartProps {
-    data: any[]
+interface ChartProps<T = Record<string, unknown>> {
+    data: T[]
     type: 'line' | 'bar' | 'pie'
     dataKey: string
     xAxisKey?: string
@@ -36,7 +36,7 @@ export function Chart({ data, type, dataKey, xAxisKey, title, yAxisLabel }: Char
                         <XAxis dataKey={xAxisKey} />
                         <YAxis label={{ value: yAxisLabel, angle: -90, position: 'insideLeft' }} />
                         <Tooltip
-                            formatter={(value: any) => {
+                            formatter={(value: string | number) => {
                                 if (typeof value === 'number') {
                                     return value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })
                                 }
@@ -58,7 +58,7 @@ export function Chart({ data, type, dataKey, xAxisKey, title, yAxisLabel }: Char
                         <XAxis dataKey={xAxisKey} />
                         <YAxis label={{ value: yAxisLabel, angle: -90, position: 'insideLeft' }} />
                         <Tooltip
-                            formatter={(value: any) => {
+                            formatter={(value: string | number) => {
                                 if (typeof value === 'number') {
                                     return value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })
                                 }
@@ -89,7 +89,7 @@ export function Chart({ data, type, dataKey, xAxisKey, title, yAxisLabel }: Char
                         ))}
                     </Pie>
                     <Tooltip
-                        formatter={(value: any) => {
+                        formatter={(value: string | number) => {
                             if (typeof value === 'number') {
                                 return value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })
                             }

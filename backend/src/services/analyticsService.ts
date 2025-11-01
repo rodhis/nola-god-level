@@ -22,7 +22,7 @@ export class AnalyticsService {
         const { startDate, endDate, storeId, channelId } = filters
 
         const conditions = ['1=1']
-        const params: any[] = []
+        const params: (string | number)[] = []
         let paramCount = 1
 
         if (startDate) {
@@ -66,7 +66,7 @@ export class AnalyticsService {
         const { startDate, endDate, storeId, channelId } = filters
 
         const conditions = ["s.sale_status_desc = 'COMPLETED'"]
-        const params: any[] = []
+        const params: (string | number)[] = []
         let paramCount = 1
 
         if (startDate) {
@@ -117,7 +117,7 @@ export class AnalyticsService {
         const { startDate, endDate } = filters
 
         const conditions = ["s.sale_status_desc = 'COMPLETED'"]
-        const params: any[] = []
+        const params: (string | number)[] = []
         let paramCount = 1
 
         if (startDate) {
@@ -155,7 +155,7 @@ export class AnalyticsService {
         const { startDate, endDate, storeId, channelId } = filters
 
         const conditions = ["sale_status_desc = 'COMPLETED'"]
-        const params: any[] = []
+        const params: (string | number)[] = []
         let paramCount = 1
 
         if (startDate) {
@@ -198,7 +198,7 @@ export class AnalyticsService {
         const { startDate, endDate, storeId, channelId } = filters
 
         const conditions = ["sale_status_desc = 'COMPLETED'"]
-        const params: any[] = []
+        const params: (string | number)[] = []
         let paramCount = 1
 
         if (startDate) {
@@ -240,7 +240,7 @@ export class AnalyticsService {
         const { startDate, endDate, storeId, channelId } = filters
 
         const conditions = ["sale_status_desc = 'COMPLETED'"]
-        const params: any[] = []
+        const params: (string | number)[] = []
         let paramCount = 1
 
         if (startDate) {
@@ -283,7 +283,7 @@ export class AnalyticsService {
         const { startDate, endDate } = filters
 
         const conditions = ["s.sale_status_desc = 'COMPLETED'"]
-        const params: any[] = []
+        const params: (string | number)[] = []
         let paramCount = 1
 
         if (startDate) {
@@ -325,7 +325,7 @@ export class AnalyticsService {
         const { startDate, endDate, storeId, channelId } = filters
 
         const conditions = ["s.sale_status_desc = 'COMPLETED'"]
-        const params: any[] = []
+        const params: (string | number)[] = []
         let paramCount = 1
 
         if (startDate) {
