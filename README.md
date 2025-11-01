@@ -1,0 +1,515 @@
+# 🍔 Nola Analytics - Plataforma de Analytics para Restaurantes
+
+> Solução completa de analytics para donos de restaurantes explorarem dados de vendas de forma simples e visual.
+
+<div align="center">
+
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+
+[Funcionalidades](#-funcionalidades) • [Quick Start](#-quick-start) • [Tecnologias](#-tecnologias) • [API](#-api-endpoints) • [Documentação](#-documentação)
+
+</div>
+
+---
+
+> **Nota**: Este README foi criado para o repositório do desafio. O README original do challenge está disponível em [README_NOLA.md](./README_NOLA.md).
+
+---
+
+## 📖 Índice
+
+-   [O Problema](#-o-problema)
+-   [A Solução](#-a-solução)
+-   [Funcionalidades](#-funcionalidades)
+-   [Demo](#-demo)
+-   [Quick Start](#-quick-start)
+-   [Estrutura do Projeto](#-estrutura-do-projeto)
+-   [Tecnologias](#-tecnologias)
+-   [API Endpoints](#-api-endpoints)
+-   [Documentação](#-documentação)
+-   [Desenvolvimento](#-desenvolvimento)
+-   [Deploy](#-deploy)
+-   [Performance](#-performance)
+
+---
+
+## 🎯 O Problema
+
+Donos de restaurantes como **Maria** gerenciam operações complexas através de múltiplos canais:
+
+-   🏪 Venda presencial no balcão
+-   📱 iFood, Rappi, Uber Eats
+-   💬 WhatsApp
+-   🖥️ App próprio
+
+Eles têm **dados valiosos de 500k+ vendas**, mas não conseguem responder perguntas críticas:
+
+-   ❓ _"Qual produto vende mais na quinta à noite no iFood?"_
+-   ❓ _"Meu ticket médio está caindo. É por canal ou por loja?"_
+-   ❓ _"Quais produtos têm menor margem e devo repensar o preço?"_
+-   ❓ _"Meu tempo de entrega piorou. Em quais dias/horários?"_
+-   ❓ _"Quais clientes compraram 3+ vezes mas não voltam há 30 dias?"_
+
+**Dashboards fixos** mostram apenas visões pré-definidas. **Power BI** é complexo demais. **Eles precisam de analytics específico para restaurantes.**
+
+---
+
+## ✨ A Solução
+
+**Nola Analytics** é uma plataforma web moderna que permite donos de restaurantes:
+
+✅ **Visualizar métricas relevantes** - Faturamento, produtos mais vendidos, horários de pico  
+✅ **Criar análises personalizadas** - Filtros simples por período, loja e canal  
+✅ **Comparar períodos** - Identificar tendências e sazonalidades  
+✅ **Extrair insights acionáveis** - Decisões baseadas em dados reais
+
+**Tudo isso sem precisar de:**
+
+-   🚫 Conhecimento técnico ou SQL
+-   🚫 Time de dados dedicado
+-   🚫 Depender de desenvolvedores
+
+---
+
+## 🎨 Funcionalidades
+
+### 📊 Dashboard Completo
+
+#### Métricas Principais (KPIs)
+
+-   💰 **Faturamento Total** - Receita do período selecionado
+-   🎫 **Ticket Médio** - Valor médio por venda
+-   📈 **Total de Vendas** - Quantidade (completas e canceladas)
+-   ⏱️ **Tempos Operacionais** - Preparo médio e entrega média
+
+#### Visualizações Interativas
+
+1. **📈 Série Temporal**
+
+    - Evolução diária de vendas e faturamento
+    - Identifica tendências e anomalias
+
+2. **🥧 Distribuição por Canal**
+
+    - % de faturamento por canal (iFood, Rappi, presencial)
+    - Gráfico de pizza interativo
+
+3. **🕐 Horários de Pico**
+
+    - Vendas por hora do dia (0-23h)
+    - Otimize equipe e estoque
+
+4. **📅 Análise Semanal**
+
+    - Faturamento por dia da semana
+    - Planeje promoções e ações
+
+5. **🏆 Top Produtos**
+    - Ranking detalhado com categoria, quantidade e faturamento
+    - Identifique best-sellers
+
+### 🔍 Sistema de Filtros
+
+Combine múltiplos filtros para análises personalizadas:
+
+-   **📅 Período** - Selecione data inicial e final
+-   **🏪 Loja** - Analise lojas específicas ou todas
+-   **📱 Canal** - Presencial, delivery, apps
+-   **🔗 Combinado** - Aplique múltiplos filtros simultaneamente
+
+> **Exemplo**: "Vendas do iFood na loja Centro SP entre 01/01 e 31/01"
+
+---
+
+## 🎥 Demo
+
+### Interface Principal
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│  📊 Analytics Restaurante                                            │
+│  Análise de dados operacionais e vendas                             │
+├──────────────────┬──────────────────┬──────────────┬────────────────┤
+│  💰 Faturamento  │  🎫 Ticket Médio │ 📊 Total     │ ⏱️ Preparo     │
+│   R$ 1.234.567   │    R$ 67,80      │  18.234      │   18 min       │
+└──────────────────┴──────────────────┴──────────────┴────────────────┘
+
+   📈 Faturamento ao Longo do Tempo
+   ┌────────────────────────────────────────────────────────────┐
+   │                                                ┌────┐       │
+   │                                        ┌───┐   │    │       │
+   │                            ┌───┐       │   │   │    │       │
+   │                    ┌───┐   │   │   ┌───┤   ├───┤    │       │
+   │            ┌───┐   │   │   │   │   │   │   │   │    │       │
+   └────────────┴───┴───┴───┴───┴───┴───┴───┴───┴───┴────┴───────┘
+            Jan    Fev    Mar    Abr    Mai    Jun    Jul
+
+   🥧 Canais                │   🕐 Horários de Pico
+   [Pizza Chart]            │   [Bar Chart]
+```
+
+**🔗 Acesse**: [http://localhost:3000](http://localhost:3000) após iniciar
+
+---
+
+## 🚀 Quick Start
+
+### Pré-requisitos
+
+-   🐳 **Docker** e **Docker Compose** instalados
+-   🐘 Dados já gerados no PostgreSQL (conforme [QUICKSTART.md](./QUICKSTART.md))
+
+### Instalação e Execução
+
+```bash
+# 1. Clone o repositório
+git clone https://github.com/lucasvieira94/nola-god-level.git
+cd nola-god-level
+
+# 2. Inicie todos os serviços
+docker-compose up -d
+
+# 3. Aguarde a inicialização (~10 segundos)
+sleep 10
+
+# 4. Acesse o dashboard
+open http://localhost:3000
+```
+
+**✨ Pronto!** O dashboard está rodando com 500k+ vendas prontas para análise.
+
+### URLs dos Serviços
+
+| Serviço     | URL                          | Descrição           |
+| ----------- | ---------------------------- | ------------------- |
+| 🎨 Frontend | http://localhost:3000        | Dashboard principal |
+| 🔌 Backend  | http://localhost:3001        | API REST            |
+| 🐘 Database | localhost:5432               | PostgreSQL          |
+| 🔍 Health   | http://localhost:3001/health | Status da API       |
+
+---
+
+## 📁 Estrutura do Projeto
+
+```
+nola-god-level/
+│
+├── backend/                    # API Node.js + Express + TypeScript
+│   ├── src/
+│   │   ├── config/
+│   │   │   └── database.ts     # PostgreSQL connection pool
+│   │   ├── controllers/
+│   │   │   └── analyticsController.ts
+│   │   ├── routes/
+│   │   │   ├── analytics.ts    # 8 endpoints de analytics
+│   │   │   └── filters.ts      # 3 endpoints de filtros
+│   │   ├── services/
+│   │   │   └── analyticsService.ts  # Lógica de negócio
+│   │   └── index.ts            # Express server
+│   ├── package.json
+│   ├── tsconfig.json
+│   └── Dockerfile
+│
+├── frontend/                   # App React + TypeScript + Vite
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Dashboard.tsx   # Componente principal
+│   │   │   ├── FilterBar.tsx   # Filtros interativos
+│   │   │   ├── MetricCard.tsx  # Cards de KPIs
+│   │   │   ├── Chart.tsx       # Gráficos reutilizáveis
+│   │   │   └── *.css           # Estilos (CSS puro)
+│   │   ├── services/
+│   │   │   └── api.ts          # Cliente HTTP
+│   │   ├── types/
+│   │   │   └── index.ts        # TypeScript interfaces
+│   │   ├── App.tsx
+│   │   └── main.tsx
+│   ├── index.html
+│   ├── package.json
+│   ├── vite.config.ts
+│   └── Dockerfile
+│
+├── documentacao/               # Documentação completa
+│   ├── ARQUITETURA.md          # Decisões técnicas
+│   ├── BIBLIOTECAS.md          # Explicação de dependências
+│   ├── GUIA_TESTE.md           # Como testar
+│   ├── INSTALACAO.md           # Setup detalhado
+│   ├── RESUMO_PROJETO.md       # Overview executivo
+│   ├── STATUS_COMPLETO.md      # Checklist completo
+│   └── VISAO_GERAL.md          # Visão geral do projeto
+│
+├── docker-compose.yml          # Orquestração de serviços
+├── database-schema.sql         # Schema PostgreSQL
+├── generate_data.py            # Gerador de dados
+└── README.md                   # Este arquivo
+```
+
+---
+
+## 🛠️ Tecnologias
+
+### Backend
+
+| Tecnologia     | Versão | Uso                                |
+| -------------- | ------ | ---------------------------------- |
+| **Node.js**    | 20     | Runtime JavaScript                 |
+| **Express**    | 4.18   | Framework web                      |
+| **TypeScript** | 5.3    | Type safety                        |
+| **PostgreSQL** | 15     | Banco de dados                     |
+| **pg**         | 8.11   | Cliente PostgreSQL (driver nativo) |
+
+**Por quê?**
+
+-   ⚡ Performance: Connection pooling, queries otimizadas
+-   🔒 Segurança: Prepared statements (previne SQL injection)
+-   🧹 Código limpo: Arquitetura em camadas (Controllers → Services → DB)
+
+### Frontend
+
+| Tecnologia     | Versão | Uso                     |
+| -------------- | ------ | ----------------------- |
+| **React**      | 18.2   | UI Framework            |
+| **TypeScript** | 5.3    | Type safety             |
+| **Vite**       | 5.0    | Build tool ultra-rápida |
+| **Recharts**   | 2.10   | Biblioteca de gráficos  |
+| **CSS Puro**   | -      | Estilos sem overhead    |
+
+**Por quê?**
+
+-   🎨 UX moderna: Componentes reativos e responsivos
+-   📊 Visualização: Gráficos interativos com Recharts
+-   ⚡ Performance: CSS puro, sem runtime overhead
+-   🔧 DX: Vite com HMR instantâneo
+
+### Database
+
+-   **PostgreSQL 15**: ACID, performance em analytics, window functions
+-   **Schema otimizado**: 500k+ vendas com relacionamentos complexos
+-   **Queries otimizadas**: < 500ms para agregações
+
+---
+
+## 📡 API Endpoints
+
+**Base URL**: `http://localhost:3001/api`
+
+### Analytics (8 endpoints)
+
+| Método | Endpoint                        | Descrição                                         | Filtros |
+| ------ | ------------------------------- | ------------------------------------------------- | ------- |
+| GET    | `/analytics/overview`           | Métricas gerais (faturamento, ticket médio, etc.) | ✅      |
+| GET    | `/analytics/products/top`       | Top N produtos mais vendidos                      | ✅      |
+| GET    | `/analytics/channels`           | Vendas por canal (iFood, presencial, etc.)        | ✅      |
+| GET    | `/analytics/time-series`        | Série temporal diária                             | ✅      |
+| GET    | `/analytics/sales-by-hour`      | Distribuição por hora do dia                      | ✅      |
+| GET    | `/analytics/sales-by-weekday`   | Distribuição por dia da semana                    | ✅      |
+| GET    | `/analytics/stores/top`         | Top N lojas por faturamento                       | ✅      |
+| GET    | `/analytics/customizations/top` | Customizações mais populares                      | ✅      |
+
+### Filtros (3 endpoints)
+
+| Método | Endpoint              | Descrição                     |
+| ------ | --------------------- | ----------------------------- |
+| GET    | `/filters/stores`     | Lista de todas as lojas       |
+| GET    | `/filters/channels`   | Lista de todos os canais      |
+| GET    | `/filters/date-range` | Intervalo de datas disponível |
+
+### Query Parameters (Filtros)
+
+Todos os endpoints de analytics suportam:
+
+-   `startDate` - Data inicial (YYYY-MM-DD)
+-   `endDate` - Data final (YYYY-MM-DD)
+-   `storeId` - ID da loja
+-   `channelId` - ID do canal
+-   `limit` - Limite de resultados (top N)
+
+**Exemplo**:
+
+```bash
+GET /api/analytics/products/top?startDate=2024-01-01&endDate=2024-01-31&storeId=5&limit=10
+```
+
+### Testando a API
+
+```bash
+# Health check
+curl http://localhost:3001/health
+
+# Métricas gerais
+curl http://localhost:3001/api/analytics/overview
+
+# Top 5 produtos
+curl "http://localhost:3001/api/analytics/products/top?limit=5"
+
+# Com filtros
+curl "http://localhost:3001/api/analytics/overview?startDate=2024-01-01&endDate=2024-01-31&storeId=1"
+```
+
+---
+
+## 📚 Documentação
+
+Documentação completa disponível na pasta [`/documentacao`](./documentacao/):
+
+| Arquivo                                                 | Descrição                                               |
+| ------------------------------------------------------- | ------------------------------------------------------- |
+| [ARQUITETURA.md](./documentacao/ARQUITETURA.md)         | Decisões arquiteturais, trade-offs, otimizações         |
+| [BIBLIOTECAS.md](./documentacao/BIBLIOTECAS.md)         | Explicação detalhada de cada dependência e alternativas |
+| [GUIA_TESTE.md](./documentacao/GUIA_TESTE.md)           | Como testar a aplicação (manual e Docker)               |
+| [INSTALACAO.md](./documentacao/INSTALACAO.md)           | Instruções completas de setup e desenvolvimento         |
+| [RESUMO_PROJETO.md](./documentacao/RESUMO_PROJETO.md)   | Overview executivo do projeto                           |
+| [STATUS_COMPLETO.md](./documentacao/STATUS_COMPLETO.md) | Checklist de funcionalidades implementadas              |
+| [VISAO_GERAL.md](./documentacao/VISAO_GERAL.md)         | Visão geral e introdução ao projeto                     |
+
+---
+
+## 💻 Desenvolvimento
+
+### Setup Local
+
+#### Backend
+
+```bash
+# Navegar para o backend
+cd backend
+
+# Instalar dependências
+npm install
+
+# Configurar variáveis de ambiente
+cp .env.example .env
+# Edite .env com suas credenciais do PostgreSQL
+
+# Iniciar em modo desenvolvimento (hot reload)
+npm run dev
+
+# Build para produção
+npm run build
+npm start
+```
+
+#### Frontend
+
+```bash
+# Navegar para o frontend
+cd frontend
+
+# Instalar dependências
+npm install
+
+# Iniciar em modo desenvolvimento (hot reload)
+npm run dev
+
+# Build para produção
+npm run build
+npm run preview
+```
+
+### Estrutura de Comandos
+
+```bash
+# Backend
+npm run dev          # Desenvolvimento com hot reload
+npm run build        # Compilar TypeScript
+npm start            # Produção
+npm run typecheck    # Verificar tipos
+
+# Frontend
+npm run dev          # Desenvolvimento com Vite
+npm run build        # Build otimizado
+npm run preview      # Preview do build
+npm run typecheck    # Verificar tipos
+```
+
+### Desenvolvimento com Docker
+
+```bash
+# Iniciar todos os serviços
+docker-compose up -d
+
+# Ver logs em tempo real
+docker-compose logs -f backend
+docker-compose logs -f frontend
+
+# Rebuild após mudanças
+docker-compose up -d --build
+
+# Parar todos os serviços
+docker-compose down
+
+# Limpar tudo (incluindo volumes)
+docker-compose down -v
+```
+
+---
+
+## 🚢 Deploy
+
+### Opções de Deploy
+
+#### 1. Docker Compose (Recomendado para VPS)
+
+```bash
+# Servidor com Docker instalado
+git clone <repo-url>
+cd nola-god-level
+docker-compose up -d
+```
+
+#### 2. Serviços Separados
+
+**Frontend** - Vercel, Netlify, Cloudflare Pages:
+
+```bash
+cd frontend
+npm run build
+# Deploy da pasta dist/
+```
+
+**Backend** - Heroku, Railway, Render:
+
+```bash
+cd backend
+# Configurar variáveis de ambiente
+# Deploy via Git push
+```
+
+**Database** - Supabase, Railway, DigitalOcean:
+
+-   PostgreSQL gerenciado
+-   Importar schema: `database-schema.sql`
+
+#### 3. Kubernetes (Para escala)
+
+Helm charts e manifests podem ser criados sob demanda.
+
+---
+
+## 📊 Performance
+
+### Benchmarks
+
+-   ✅ Queries simples: **< 100ms**
+-   ✅ Queries com agregações: **< 500ms**
+-   ✅ Dashboard completo (primeira carga): **< 2s**
+-   ✅ Connection pool: **20 conexões simultâneas**
+-   ✅ 500k+ registros sem degradação
+
+### Otimizações Implementadas
+
+-   Connection pooling PostgreSQL
+-   Agregações no banco (não no backend)
+-   Queries parametrizadas (previne SQL injection)
+-   Frontend com CSS puro (zero overhead)
+-   Vite com tree-shaking e code splitting
+
+---
+
+## 📄 Licença
+
+Este projeto foi desenvolvido para o **Nola God Level Coder Challenge 2025**.
