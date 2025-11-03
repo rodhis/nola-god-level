@@ -31,10 +31,18 @@ export function Chart({ data, type, dataKey, xAxisKey, title, yAxisLabel }: Char
         if (type === 'line') {
             return (
                 <ResponsiveContainer width="100%" height={300}>
-                    <LineChart data={data}>
+                    <LineChart data={data} margin={{ top: 5, right: 30, left: 60, bottom: 5 }}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey={xAxisKey} />
-                        <YAxis label={{ value: yAxisLabel, angle: -90, position: 'insideLeft' }} />
+                        <YAxis
+                            label={{
+                                value: yAxisLabel,
+                                angle: -90,
+                                position: 'left',
+                                offset: 30,
+                                style: { textAnchor: 'middle' },
+                            }}
+                        />
                         <Tooltip
                             formatter={(value: string | number) => {
                                 if (typeof value === 'number') {
@@ -53,10 +61,18 @@ export function Chart({ data, type, dataKey, xAxisKey, title, yAxisLabel }: Char
         if (type === 'bar') {
             return (
                 <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={data}>
+                    <BarChart data={data} margin={{ top: 5, right: 30, left: 60, bottom: 5 }}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey={xAxisKey} />
-                        <YAxis label={{ value: yAxisLabel, angle: -90, position: 'insideLeft' }} />
+                        <YAxis
+                            label={{
+                                value: yAxisLabel,
+                                angle: -90,
+                                position: 'left',
+                                offset: 35,
+                                style: { textAnchor: 'middle' },
+                            }}
+                        />
                         <Tooltip
                             formatter={(value: string | number) => {
                                 if (typeof value === 'number') {
