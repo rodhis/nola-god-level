@@ -115,12 +115,33 @@ open http://localhost:3000
 
 ## 📊 Funcionalidades
 
+> 📖 **Ver detalhes completos**: [FEATURES.md](./FEATURES.md)
+
+### 🚀 Features Principais
+
+1. **📊 Comparação Temporal**
+
+    - Compara métricas com período anterior equivalente
+    - Indicadores visuais de tendência (↑ +15.3% ou ↓ -2.1%)
+    - Banner mostrando período de comparação
+
+2. **🏪 Comparação de Lojas**
+
+    - Analisa 2+ lojas lado a lado
+    - Tabela comparativa + 3 gráficos
+    - Checkboxes para seleção de lojas
+
+3. **📥 Export de Dados (CSV)**
+    - Exporta produtos, lojas, relatórios completos
+    - Compatível com Excel (UTF-8 com BOM)
+    - Timestamps automáticos nos nomes
+
 ### Métricas Principais (KPIs)
 
--   Faturamento total
--   Ticket médio
--   Número de vendas (total, completas, canceladas)
--   Tempo médio de preparo
+-   Faturamento total com comparação
+-   Ticket médio com tendência
+-   Número de vendas com % de mudança
+-   Tempo médio de preparo com comparação
 -   Tempo médio de entrega
 
 ### Visualizações
@@ -129,25 +150,29 @@ open http://localhost:3000
 2. **Distribuição por Canal**: % de faturamento por canal (iFood, Rappi, presencial)
 3. **Horários de Pico**: Vendas por hora do dia
 4. **Análise Semanal**: Faturamento por dia da semana
-5. **Top Produtos**: Ranking com quantidade e faturamento
+5. **Top Produtos**: Ranking com quantidade e faturamento (com export)
+6. **Comparação de Lojas**: Tabela + gráficos comparativos
 
 ### Filtros Disponíveis
 
 -   **Período**: Data inicial e final
--   **Loja**: Análise de loja específica
+-   **Loja**: Análise de loja específica ou múltiplas
 -   **Canal**: Filtro por canal de venda
 -   **Combinado**: Múltiplos filtros simultaneamente
+-   **Modo Comparação**: Seleção de lojas com checkboxes
 
 ## 📖 Documentação
 
-| Documento                                  | Descrição                                       |
-| ------------------------------------------ | ----------------------------------------------- |
-| [ARQUITETURA.md](./ARQUITETURA.md)         | Decisões arquiteturais e trade-offs             |
-| [INSTALACAO.md](./INSTALACAO.md)           | Instruções completas de setup e desenvolvimento |
-| [BIBLIOTECAS.md](./BIBLIOTECAS.md)         | Explicação detalhada de cada dependência        |
-| [GUIA_TESTE.md](./GUIA_TESTE.md)           | Como testar a aplicação                         |
-| [RESUMO_PROJETO.md](./RESUMO_PROJETO.md)   | Resumo executivo do que foi construído          |
-| [STATUS_COMPLETO.md](./STATUS_COMPLETO.md) | Checklist de funcionalidades implementadas      |
+| Documento                                  | Descrição                                  |
+| ------------------------------------------ | ------------------------------------------ |
+| [VISAO_GERAL.md](./VISAO_GERAL.md)         | Este documento - Visão geral do projeto    |
+| [ARQUITETURA.md](./ARQUITETURA.md)         | Decisões arquiteturais e trade-offs        |
+| [FEATURES.md](./FEATURES.md)               | 🆕 Documentação completa de features       |
+| [BIBLIOTECAS.md](./BIBLIOTECAS.md)         | Explicação detalhada de cada dependência   |
+| [INSTALACAO.md](./INSTALACAO.md)           | Instruções completas de setup              |
+| [GUIA_TESTE.md](./GUIA_TESTE.md)           | Como testar a aplicação                    |
+| [RESUMO_PROJETO.md](./RESUMO_PROJETO.md)   | Resumo executivo do que foi construído     |
+| [STATUS_COMPLETO.md](./STATUS_COMPLETO.md) | Checklist de funcionalidades implementadas |
 
 ## 🚀 Desenvolvimento Local
 

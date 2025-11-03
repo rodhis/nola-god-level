@@ -77,14 +77,39 @@ Eles têm **dados valiosos de 500k+ vendas**, mas não conseguem responder pergu
 
 ## 🎨 Funcionalidades
 
+> 📖 **Documentação completa de features**: [docs/FEATURES.md](./docs/FEATURES.md)
+
+### � Features Principais
+
+#### 1. �📊 Comparação Temporal
+
+-   Compara métricas atuais com período anterior equivalente
+-   Banner visual mostrando período de comparação
+-   Indicadores de tendência (↑ +15.3% ou ↓ -2.1%)
+-   Métricas: Faturamento, Ticket Médio, Total Vendas, Tempo Preparo
+
+#### 2. 🏪 Comparação de Lojas
+
+-   Analisa 2+ lojas lado a lado
+-   Modo comparação com checkboxes para seleção
+-   Tabela comparativa completa
+-   3 gráficos de barras (Faturamento, Ticket, Vendas)
+
+#### 3. 📥 Export de Dados (CSV)
+
+-   Exporta produtos mais vendidos
+-   Exporta comparação de lojas
+-   Exporta relatório completo do dashboard
+-   Compatível com Excel (UTF-8 com BOM)
+
 ### 📊 Dashboard Completo
 
 #### Métricas Principais (KPIs)
 
--   💰 **Faturamento Total** - Receita do período selecionado
--   🎫 **Ticket Médio** - Valor médio por venda
--   📈 **Total de Vendas** - Quantidade (completas e canceladas)
--   ⏱️ **Tempos Operacionais** - Preparo médio e entrega média
+-   💰 **Faturamento Total** - Receita do período com comparação
+-   🎫 **Ticket Médio** - Valor médio por venda com tendência
+-   📈 **Total de Vendas** - Quantidade com % de mudança
+-   ⏱️ **Tempos Operacionais** - Preparo e entrega com comparação
 
 #### Visualizações Interativas
 
@@ -297,18 +322,20 @@ nola-god-level/
 
 **Base URL**: `http://localhost:3001/api`
 
-### Analytics (8 endpoints)
+### Analytics (10 endpoints)
 
-| Método | Endpoint                        | Descrição                                         | Filtros |
-| ------ | ------------------------------- | ------------------------------------------------- | ------- |
-| GET    | `/analytics/overview`           | Métricas gerais (faturamento, ticket médio, etc.) | ✅      |
-| GET    | `/analytics/products/top`       | Top N produtos mais vendidos                      | ✅      |
-| GET    | `/analytics/channels`           | Vendas por canal (iFood, presencial, etc.)        | ✅      |
-| GET    | `/analytics/time-series`        | Série temporal diária                             | ✅      |
-| GET    | `/analytics/sales-by-hour`      | Distribuição por hora do dia                      | ✅      |
-| GET    | `/analytics/sales-by-weekday`   | Distribuição por dia da semana                    | ✅      |
-| GET    | `/analytics/stores/top`         | Top N lojas por faturamento                       | ✅      |
-| GET    | `/analytics/customizations/top` | Customizações mais populares                      | ✅      |
+| Método | Endpoint                         | Descrição                           | Status |
+| ------ | -------------------------------- | ----------------------------------- | ------ |
+| GET    | `/analytics/overview`            | Métricas gerais do dashboard        | ✅     |
+| GET    | `/analytics/overview-comparison` | 🆕 Métricas com comparação temporal | ✅     |
+| GET    | `/analytics/products/top`        | Top N produtos mais vendidos        | ✅     |
+| GET    | `/analytics/channels`            | Vendas agregadas por canal          | ✅     |
+| GET    | `/analytics/time-series`         | Série temporal diária de vendas     | ✅     |
+| GET    | `/analytics/sales-by-hour`       | Distribuição por hora do dia        | ✅     |
+| GET    | `/analytics/sales-by-weekday`    | Distribuição por dia da semana      | ✅     |
+| GET    | `/analytics/stores/top`          | Top N lojas por faturamento         | ✅     |
+| GET    | `/analytics/stores/compare`      | 🆕 Comparação de múltiplas lojas    | ✅     |
+| GET    | `/analytics/customizations/top`  | Customizações mais populares        | ✅     |
 
 ### Filtros (3 endpoints)
 
@@ -354,17 +381,18 @@ curl "http://localhost:3001/api/analytics/overview?startDate=2024-01-01&endDate=
 
 ## 📚 Documentação
 
-Documentação completa disponível na pasta [`/documentacao`](./documentacao/):
+Documentação completa disponível na pasta [`/docs`](./docs/):
 
-| Arquivo                                                 | Descrição                                               |
-| ------------------------------------------------------- | ------------------------------------------------------- |
-| [ARQUITETURA.md](./documentacao/ARQUITETURA.md)         | Decisões arquiteturais, trade-offs, otimizações         |
-| [BIBLIOTECAS.md](./documentacao/BIBLIOTECAS.md)         | Explicação detalhada de cada dependência e alternativas |
-| [GUIA_TESTE.md](./documentacao/GUIA_TESTE.md)           | Como testar a aplicação (manual e Docker)               |
-| [INSTALACAO.md](./documentacao/INSTALACAO.md)           | Instruções completas de setup e desenvolvimento         |
-| [RESUMO_PROJETO.md](./documentacao/RESUMO_PROJETO.md)   | Overview executivo do projeto                           |
-| [STATUS_COMPLETO.md](./documentacao/STATUS_COMPLETO.md) | Checklist de funcionalidades implementadas              |
-| [VISAO_GERAL.md](./documentacao/VISAO_GERAL.md)         | Visão geral e introdução ao projeto                     |
+| Arquivo                                         | Descrição                                       |
+| ----------------------------------------------- | ----------------------------------------------- |
+| [VISAO_GERAL.md](./docs/VISAO_GERAL.md)         | Visão geral e introdução ao projeto             |
+| [ARQUITETURA.md](./docs/ARQUITETURA.md)         | Decisões arquiteturais, trade-offs, otimizações |
+| [FEATURES.md](./docs/FEATURES.md)               | 🆕 Features implementadas (consolidado)         |
+| [BIBLIOTECAS.md](./docs/BIBLIOTECAS.md)         | Explicação detalhada de cada dependência        |
+| [INSTALACAO.md](./docs/INSTALACAO.md)           | Instruções completas de setup                   |
+| [GUIA_TESTE.md](./docs/GUIA_TESTE.md)           | Como testar a aplicação                         |
+| [RESUMO_PROJETO.md](./docs/RESUMO_PROJETO.md)   | Overview executivo do projeto                   |
+| [STATUS_COMPLETO.md](./docs/STATUS_COMPLETO.md) | Checklist de funcionalidades implementadas      |
 
 ---
 
