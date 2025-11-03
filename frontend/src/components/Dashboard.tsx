@@ -3,7 +3,9 @@ import { FilterBar } from './FilterBar'
 import { MetricCard } from './MetricCard'
 import { Chart } from './Chart'
 import { StoreComparison } from './StoreComparison'
+import { ExportButton } from './ExportButton'
 import { analyticsApi } from '../services/api'
+import { exportProductsCSV, exportCompleteReportCSV } from '../utils/exportUtils'
 import {
     Filters,
     OverviewMetrics,
@@ -139,6 +141,17 @@ export function Dashboard() {
         setComparedStores([])
     }
 
+    // Export handlers
+    const handleExportProducts = () => {
+        exportProductsCSV(topProducts)
+    }
+
+    const handleExportCompleteReport = () => {
+        if (overview) {
+            exportCompleteReportCSV(overview, topProducts, channels, comparisonPeriod?.current)
+        }
+    }
+
     // Process data for charts
     const timeSeriesChartData = timeSeries.map((d) => ({
         ...d,
@@ -164,8 +177,19 @@ export function Dashboard() {
     return (
         <div className="dashboard">
             <header className="dashboard-header">
-                <h1>📊 Analytics Restaurante</h1>
-                <p>Análise de dados operacionais e vendas</p>
+                <div className="header-content">
+                    <div>
+                        <h1>📊 Analytics Restaurante</h1>
+                        <p>Análise de dados operacionais e vendas</p>
+                    </div>
+                    {!showStoreComparison && overview && (
+                        <ExportButton
+                            onClick={handleExportCompleteReport}
+                            label="Exportar Relatório Completo"
+                            variant="primary"
+                        />
+                    )}
+                </div>
             </header>
 
             <div className="dashboard-container">
@@ -285,7 +309,10 @@ export function Dashboard() {
                             {/* Top Products Table */}
                             {topProducts.length > 0 && (
                                 <section className="table-section">
-                                    <h2>Produtos Mais Vendidos</h2>
+                                    <div className="table-header">
+                                        <h2>Produtos Mais Vendidos</h2>
+                                        <ExportButton onClick={handleExportProducts} label="Exportar" />
+                                    </div>
                                     <table className="data-table">
                                         <thead>
                                             <tr>

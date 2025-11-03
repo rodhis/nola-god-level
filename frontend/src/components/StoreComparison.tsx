@@ -1,5 +1,7 @@
 import { Store } from '../interfaces'
 import { Chart } from './Chart'
+import { ExportButton } from './ExportButton'
+import { exportStoresCSV } from '../utils/exportUtils'
 import './StoreComparison.css'
 
 interface StoreComparisonProps {
@@ -27,6 +29,10 @@ export function StoreComparison({ stores, onClose }: StoreComparisonProps) {
         return `${minutes} min`
     }
 
+    const handleExport = () => {
+        exportStoresCSV(stores)
+    }
+
     // Prepare data for charts
     const revenueChartData = stores.map((store) => ({
         name: store.name,
@@ -47,11 +53,14 @@ export function StoreComparison({ stores, onClose }: StoreComparisonProps) {
         <div className="store-comparison">
             <div className="store-comparison-header">
                 <h2>🏪 Comparação de Lojas</h2>
-                {onClose && (
-                    <button className="close-button" onClick={onClose}>
-                        ✕
-                    </button>
-                )}
+                <div className="header-actions">
+                    <ExportButton onClick={handleExport} label="Exportar" variant="secondary" />
+                    {onClose && (
+                        <button className="close-button" onClick={onClose}>
+                            ✕
+                        </button>
+                    )}
+                </div>
             </div>
 
             {/* Comparison Table */}
