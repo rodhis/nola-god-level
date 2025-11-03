@@ -366,6 +366,83 @@ export class AnalyticsService {
         const result = await pool.query(query, params)
         return result.rows
     }
+
+    /**
+     * Get overview metrics with comparison to previous period
+     * Automatically calculates the previous period based on the current date range
+     */
+    async getOverviewMetricsWithComparison(filters: Filters) {
+        const currentMetrics = await this.getOverviewMetrics(filters)
+
+        // Calculate previous period
+        if (!filters.startDate || !filters.endDate) {
+            // If no date range specified, return current metrics only
+            return {
+                current: currentMetrics,
+                previous: null,
+                comparison: null,
+            }
+        }
+
+        const startDate = new Date(filters.startDate)
+        const endDate = new Date(filters.endDate)
+        const daysDiff = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24))
+
+        const previousStartDate = new Date(startDate)
+        previousStartDate.setDate(previousStartDate.getDate() - daysDiff)
+
+        const previousEndDate = new Date(endDate)
+        previousEndDate.setDate(previousEndDate.getDate() - daysDiff)
+
+        const previousFilters = {
+            ...filters,
+            startDate: previousStartDate.toISOString().split('T')[0],
+            endDate: previousEndDate.toISOString().split('T')[0],
+        }
+
+        const previousMetrics = await this.getOverviewMetrics(previousFilters)
+
+        // Calculate percentage changes
+        const calculateChange = (current: number, previous: number) => {
+            if (previous === 0) return current > 0 ? 100 : 0
+            return ((current - previous) / previous) * 100
+        }
+
+        const comparison = {
+            total_revenue_change: calculateChange(
+                parseFloat(currentMetrics.total_revenue),
+                parseFloat(previousMetrics.total_revenue)
+            ),
+            total_sales_change: calculateChange(
+                parseInt(currentMetrics.total_sales),
+                parseInt(previousMetrics.total_sales)
+            ),
+            avg_ticket_change: calculateChange(
+                parseFloat(currentMetrics.avg_ticket),
+                parseFloat(previousMetrics.avg_ticket)
+            ),
+            avg_production_time_change: calculateChange(
+                parseFloat(currentMetrics.avg_production_time),
+                parseFloat(previousMetrics.avg_production_time)
+            ),
+        }
+
+        return {
+            current: currentMetrics,
+            previous: previousMetrics,
+            comparison,
+            period: {
+                current: {
+                    startDate: filters.startDate,
+                    endDate: filters.endDate,
+                },
+                previous: {
+                    startDate: previousStartDate.toISOString().split('T')[0],
+                    endDate: previousEndDate.toISOString().split('T')[0],
+                },
+            },
+        }
+    }
 }
 
 export default new AnalyticsService()

@@ -28,6 +28,37 @@ export const analyticsApi = {
         return response.json()
     },
 
+    async getOverviewWithComparison(filters: Filters): Promise<{
+        current: OverviewMetrics
+        previous: OverviewMetrics | null
+        comparison: {
+            total_revenue_change: number
+            total_sales_change: number
+            avg_ticket_change: number
+            avg_production_time_change: number
+        } | null
+        period: {
+            current: {
+                startDate: string
+                endDate: string
+            }
+            previous: {
+                startDate: string
+                endDate: string
+            }
+        } | null
+    }> {
+        const params = new URLSearchParams()
+        if (filters.startDate) params.append('startDate', filters.startDate)
+        if (filters.endDate) params.append('endDate', filters.endDate)
+        if (filters.storeId) params.append('storeId', filters.storeId.toString())
+        if (filters.channelId) params.append('channelId', filters.channelId.toString())
+
+        const response = await fetch(`/api/analytics/overview-comparison?${params}`)
+        if (!response.ok) throw new Error('Failed to fetch overview with comparison')
+        return response.json()
+    },
+
     async getTopProducts(filters: Filters, limit = 10): Promise<Product[]> {
         const params = new URLSearchParams()
         if (filters.startDate) params.append('startDate', filters.startDate)

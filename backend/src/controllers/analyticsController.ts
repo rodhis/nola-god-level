@@ -148,6 +148,23 @@ export class AnalyticsController {
             res.status(500).json({ error: 'Erro ao buscar customizações mais populares' })
         }
     }
+
+    async getOverviewWithComparison(req: Request, res: Response) {
+        try {
+            const filters = {
+                startDate: req.query.startDate as string | undefined,
+                endDate: req.query.endDate as string | undefined,
+                storeId: parseIntSafe(req.query.storeId),
+                channelId: parseIntSafe(req.query.channelId),
+            }
+
+            const metrics = await analyticsService.getOverviewMetricsWithComparison(filters)
+            res.json(metrics)
+        } catch (error) {
+            console.error('Error in getOverviewWithComparison:', error)
+            res.status(500).json({ error: 'Erro ao buscar métricas com comparação' })
+        }
+    }
 }
 
 export default new AnalyticsController()

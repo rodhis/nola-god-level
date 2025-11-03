@@ -3,7 +3,15 @@ import { FilterBar } from './FilterBar'
 import { MetricCard } from './MetricCard'
 import { Chart } from './Chart'
 import { analyticsApi } from '../services/api'
-import { Filters, OverviewMetrics, Product, Channel, TimeSeriesData, HourlyData, WeekdayData } from '../interfaces'
+import {
+    Filters,
+    OverviewMetrics,
+    Product,
+    Channel,
+    TimeSeriesData,
+    HourlyData,
+    WeekdayData,
+} from '../interfaces'
 import './Dashboard.css'
 
 const WEEKDAY_NAMES = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
@@ -12,6 +20,16 @@ export function Dashboard() {
     const [filters, setFilters] = useState<Filters>({})
     const [loading, setLoading] = useState(false)
     const [overview, setOverview] = useState<OverviewMetrics | null>(null)
+    const [comparison, setComparison] = useState<{
+        total_revenue_change: number
+        total_sales_change: number
+        avg_ticket_change: number
+        avg_production_time_change: number
+    } | null>(null)
+    const [comparisonPeriod, setComparisonPeriod] = useState<{
+        current: { startDate: string; endDate: string }
+        previous: { startDate: string; endDate: string }
+    } | null>(null)
     const [topProducts, setTopProducts] = useState<Product[]>([])
     const [channels, setChannels] = useState<Channel[]>([])
     const [timeSeries, setTimeSeries] = useState<TimeSeriesData[]>([])
@@ -25,8 +43,15 @@ export function Dashboard() {
     const loadDashboardData = async () => {
         setLoading(true)
         try {
-            const [overviewData, productsData, channelsData, timeSeriesData, hourlyDataRes, weekdayDataRes] = await Promise.all([
-                analyticsApi.getOverview(filters),
+            const [
+                overviewDataWithComparison,
+                productsData,
+                channelsData,
+                timeSeriesData,
+                hourlyDataRes,
+                weekdayDataRes,
+            ] = await Promise.all([
+                analyticsApi.getOverviewWithComparison(filters),
                 analyticsApi.getTopProducts(filters, 10),
                 analyticsApi.getSalesByChannel(filters),
                 analyticsApi.getSalesTimeSeries(filters),
@@ -34,7 +59,9 @@ export function Dashboard() {
                 analyticsApi.getSalesByWeekday(filters),
             ])
 
-            setOverview(overviewData)
+            setOverview(overviewDataWithComparison.current)
+            setComparison(overviewDataWithComparison.comparison)
+            setComparisonPeriod(overviewDataWithComparison.period)
             setTopProducts(productsData)
             setChannels(channelsData)
             setTimeSeries(timeSeriesData)
@@ -61,6 +88,33 @@ export function Dashboard() {
     const formatTime = (seconds: number) => {
         const minutes = Math.floor(seconds / 60)
         return `${minutes} min`
+    }
+
+    const formatPercentage = (value: number) => {
+        return `${value > 0 ? '+' : ''}${value.toFixed(1)}%`
+    }
+
+    const formatDate = (dateString: string) => {
+        return new Date(dateString).toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+        })
+    }
+
+    const getComparisonPeriodText = () => {
+        if (!comparisonPeriod) return null
+        return `${formatDate(comparisonPeriod.previous.startDate)} a ${formatDate(
+            comparisonPeriod.previous.endDate
+        )}`
+    }
+
+    const getTrend = (changeValue: number | undefined) => {
+        if (changeValue === undefined || changeValue === null) return undefined
+        return {
+            value: formatPercentage(changeValue),
+            isPositive: changeValue >= 0,
+        }
     }
 
     // Process data for charts
@@ -102,31 +156,47 @@ export function Dashboard() {
 
                     {!loading && overview && (
                         <>
+                            {/* Comparison Period Indicator */}
+                            {comparisonPeriod && comparison && (
+                                <div className="comparison-period-banner">
+                                    <span className="comparison-icon">📊</span>
+                                    <span className="comparison-text">
+                                        Comparando com o período: <strong>{getComparisonPeriodText()}</strong>
+                                    </span>
+                                </div>
+                            )}
+
                             {/* Overview Metrics */}
                             <section className="metrics-grid">
                                 <MetricCard
                                     title="Faturamento Total"
                                     value={formatCurrency(parseFloat(overview.total_revenue.toString()))}
                                     subtitle={`${formatNumber(overview.completed_sales)} vendas completadas`}
+                                    trend={getTrend(comparison?.total_revenue_change)}
                                 />
                                 <MetricCard
                                     title="Ticket Médio"
                                     value={formatCurrency(parseFloat(overview.avg_ticket.toString()))}
                                     subtitle="Por venda completa"
+                                    trend={getTrend(comparison?.avg_ticket_change)}
                                 />
                                 <MetricCard
                                     title="Total de Vendas"
                                     value={formatNumber(overview.total_sales)}
                                     subtitle={`${overview.cancelled_sales} canceladas`}
+                                    trend={getTrend(comparison?.total_sales_change)}
                                 />
                                 <MetricCard
                                     title="Tempo Médio de Preparo"
                                     value={formatTime(parseFloat(overview.avg_production_time.toString()))}
                                     subtitle={
                                         overview.avg_delivery_time
-                                            ? `Entrega: ${formatTime(parseFloat(overview.avg_delivery_time.toString()))}`
+                                            ? `Entrega: ${formatTime(
+                                                  parseFloat(overview.avg_delivery_time.toString())
+                                              )}`
                                             : undefined
                                     }
+                                    trend={getTrend(comparison?.avg_production_time_change)}
                                 />
                             </section>
 
@@ -205,7 +275,11 @@ export function Dashboard() {
                                                     <td>{product.name}</td>
                                                     <td>{product.category || 'N/A'}</td>
                                                     <td>{formatNumber(product.total_quantity)}</td>
-                                                    <td>{formatCurrency(parseFloat(product.total_revenue.toString()))}</td>
+                                                    <td>
+                                                        {formatCurrency(
+                                                            parseFloat(product.total_revenue.toString())
+                                                        )}
+                                                    </td>
                                                     <td>{formatNumber(product.times_sold)}</td>
                                                 </tr>
                                             ))}

@@ -11,6 +11,9 @@ const router = Router()
 // GET /api/analytics/overview - General metrics
 router.get('/overview', analyticsController.getOverview)
 
+// GET /api/analytics/overview-comparison - General metrics with comparison to previous period
+router.get('/overview-comparison', analyticsController.getOverviewWithComparison)
+
 // GET /api/analytics/products/top - Top selling products
 router.get('/products/top', analyticsController.getTopProducts)
 
