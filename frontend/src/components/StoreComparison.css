@@ -1,0 +1,137 @@
+.store-comparison {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.store-comparison-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.store-comparison-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.close-button {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.close-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Table */
+.comparison-table-container {
+    overflow-x: auto;
+    padding: 1.5rem;
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.comparison-table thead {
+    background-color: #f8f9fa;
+}
+
+.comparison-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #555;
+    border-bottom: 2px solid #dee2e6;
+    white-space: nowrap;
+}
+
+.comparison-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.comparison-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.store-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.store-location {
+    color: #666;
+    font-size: 0.85rem;
+}
+
+.metric-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.metric-main {
+    font-weight: 600;
+    color: #333;
+}
+
+.metric-sub {
+    font-size: 0.75rem;
+    color: #999;
+}
+
+/* Charts */
+.comparison-charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+    padding: 0 1.5rem 1.5rem;
+}
+
+.comparison-chart {
+    min-height: 300px;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .comparison-charts {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .comparison-table {
+        font-size: 0.8rem;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: 0.75rem 0.5rem;
+    }
+
+    .store-comparison-header {
+        padding: 1rem;
+    }
+
+    .store-comparison-header h2 {
+        font-size: 1.25rem;
+    }
+}

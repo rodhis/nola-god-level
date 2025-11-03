@@ -32,8 +32,12 @@ export interface Store {
     city: string
     state: string
     total_sales?: number
+    completed_sales?: number
+    cancelled_sales?: number
     total_revenue?: number
     avg_ticket?: number
+    avg_production_time?: number
+    avg_delivery_time?: number
 }
 
 export interface TimeSeriesData {

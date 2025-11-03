@@ -32,6 +32,9 @@ router.get('/sales-by-weekday', analyticsController.getSalesByWeekday)
 // GET /api/analytics/stores/top - Top performing stores
 router.get('/stores/top', analyticsController.getTopStores)
 
+// GET /api/analytics/stores/compare - Compare multiple stores
+router.get('/stores/compare', analyticsController.compareStores)
+
 // GET /api/analytics/customizations/top - Most popular customizations
 router.get('/customizations/top', analyticsController.getTopCustomizations)
 

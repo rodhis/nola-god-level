@@ -165,6 +165,39 @@ export class AnalyticsController {
             res.status(500).json({ error: 'Erro ao buscar métricas com comparação' })
         }
     }
+
+    async compareStores(req: Request, res: Response) {
+        try {
+            const filters = {
+                startDate: req.query.startDate as string | undefined,
+                endDate: req.query.endDate as string | undefined,
+            }
+
+            // Parse store IDs from comma-separated string or array
+            let storeIds: number[] = []
+            if (req.query.storeIds) {
+                if (typeof req.query.storeIds === 'string') {
+                    storeIds = req.query.storeIds
+                        .split(',')
+                        .map(Number)
+                        .filter((id) => !isNaN(id))
+                } else if (Array.isArray(req.query.storeIds)) {
+                    storeIds = req.query.storeIds.map(Number).filter((id) => !isNaN(id))
+                }
+            }
+
+            if (storeIds.length === 0) {
+                res.status(400).json({ error: 'É necessário fornecer pelo menos uma loja para comparação' })
+                return
+            }
+
+            const comparison = await analyticsService.compareStores(filters, storeIds)
+            res.json(comparison)
+        } catch (error) {
+            console.error('Error in compareStores:', error)
+            res.status(500).json({ error: 'Erro ao comparar lojas' })
+        }
+    }
 }
 
 export default new AnalyticsController()

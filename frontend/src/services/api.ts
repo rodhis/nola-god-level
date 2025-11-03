@@ -141,6 +141,17 @@ export const analyticsApi = {
         if (!response.ok) throw new Error('Failed to fetch top customizations')
         return response.json()
     },
+
+    async compareStores(filters: Filters, storeIds: number[]): Promise<Store[]> {
+        const params = new URLSearchParams()
+        if (filters.startDate) params.append('startDate', filters.startDate)
+        if (filters.endDate) params.append('endDate', filters.endDate)
+        params.append('storeIds', storeIds.join(','))
+
+        const response = await fetch(`/api/analytics/stores/compare?${params}`)
+        if (!response.ok) throw new Error('Failed to compare stores')
+        return response.json()
+    },
 }
 
 export const filtersApi = {

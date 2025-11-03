@@ -443,6 +443,58 @@ export class AnalyticsService {
             },
         }
     }
+
+    /**
+     * Compare multiple stores side by side
+     * Returns metrics for each specified store
+     */
+    async compareStores(filters: DateRange, storeIds: number[]) {
+        const { startDate, endDate } = filters
+
+        if (!storeIds || storeIds.length === 0) {
+            return []
+        }
+
+        const conditions = ["s.sale_status_desc = 'COMPLETED'"]
+        const params: (string | number | number[])[] = []
+        let paramCount = 1
+
+        if (startDate) {
+            conditions.push(`s.created_at >= $${paramCount++}`)
+            params.push(startDate)
+        }
+        if (endDate) {
+            conditions.push(`s.created_at <= $${paramCount++}`)
+            params.push(endDate)
+        }
+
+        // Add store IDs filter
+        conditions.push(`s.store_id = ANY($${paramCount++})`)
+        params.push(storeIds)
+
+        const query = `
+      SELECT 
+        st.id,
+        st.name,
+        st.city,
+        st.state,
+        COUNT(*) as total_sales,
+        COUNT(CASE WHEN s.sale_status_desc = 'COMPLETED' THEN 1 END) as completed_sales,
+        COUNT(CASE WHEN s.sale_status_desc = 'CANCELLED' THEN 1 END) as cancelled_sales,
+        COALESCE(SUM(s.total_amount), 0) as total_revenue,
+        COALESCE(AVG(s.total_amount), 0) as avg_ticket,
+        COALESCE(AVG(s.production_seconds), 0) as avg_production_time,
+        COALESCE(AVG(CASE WHEN s.delivery_seconds IS NOT NULL THEN s.delivery_seconds END), 0) as avg_delivery_time
+      FROM sales s
+      JOIN stores st ON st.id = s.store_id
+      WHERE ${conditions.join(' AND ')}
+      GROUP BY st.id, st.name, st.city, st.state
+      ORDER BY total_revenue DESC
+    `
+
+        const result = await pool.query(query, params)
+        return result.rows
+    }
 }
 
 export default new AnalyticsService()

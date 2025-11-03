@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react'
 import { FilterBar } from './FilterBar'
 import { MetricCard } from './MetricCard'
 import { Chart } from './Chart'
+import { StoreComparison } from './StoreComparison'
 import { analyticsApi } from '../services/api'
 import {
     Filters,
     OverviewMetrics,
     Product,
     Channel,
+    Store,
     TimeSeriesData,
     HourlyData,
     WeekdayData,
@@ -35,6 +37,8 @@ export function Dashboard() {
     const [timeSeries, setTimeSeries] = useState<TimeSeriesData[]>([])
     const [hourlyData, setHourlyData] = useState<HourlyData[]>([])
     const [weekdayData, setWeekdayData] = useState<WeekdayData[]>([])
+    const [comparedStores, setComparedStores] = useState<Store[]>([])
+    const [showStoreComparison, setShowStoreComparison] = useState(false)
 
     useEffect(() => {
         loadDashboardData()
@@ -117,6 +121,24 @@ export function Dashboard() {
         }
     }
 
+    const handleCompareStores = async (storeIds: number[]) => {
+        try {
+            setLoading(true)
+            const stores = await analyticsApi.compareStores(filters, storeIds)
+            setComparedStores(stores)
+            setShowStoreComparison(true)
+        } catch (error) {
+            console.error('Error comparing stores:', error)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handleCloseComparison = () => {
+        setShowStoreComparison(false)
+        setComparedStores([])
+    }
+
     // Process data for charts
     const timeSeriesChartData = timeSeries.map((d) => ({
         ...d,
@@ -148,13 +170,18 @@ export function Dashboard() {
 
             <div className="dashboard-container">
                 <aside className="sidebar">
-                    <FilterBar onFilterChange={setFilters} />
+                    <FilterBar onFilterChange={setFilters} onCompareStores={handleCompareStores} />
                 </aside>
 
                 <main className="dashboard-content">
                     {loading && <div className="loading">Carregando dados...</div>}
 
-                    {!loading && overview && (
+                    {/* Store Comparison View */}
+                    {showStoreComparison && comparedStores.length > 0 && (
+                        <StoreComparison stores={comparedStores} onClose={handleCloseComparison} />
+                    )}
+
+                    {!loading && overview && !showStoreComparison && (
                         <>
                             {/* Comparison Period Indicator */}
                             {comparisonPeriod && comparison && (
