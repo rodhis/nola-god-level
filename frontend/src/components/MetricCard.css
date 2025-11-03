@@ -4,6 +4,7 @@
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s, box-shadow 0.2s;
+    min-width: 0; /* Permite que o card encolha se necessário */
 }
 
 .metric-card:hover {
@@ -18,13 +19,18 @@
     text-transform: uppercase;
     margin-bottom: 0.75rem;
     letter-spacing: 0.5px;
+    word-wrap: break-word;
 }
 
 .metric-value {
-    font-size: 2rem;
+    font-size: 1.75rem;
     font-weight: 700;
     color: #333;
     margin-bottom: 0.5rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    line-height: 1.2;
 }
 
 .metric-subtitle {
@@ -50,4 +56,21 @@
 .metric-trend.negative {
     color: #ef4444;
     background-color: #fee2e2;
+}
+
+/* Responsive font sizes for very large values */
+@media (max-width: 1400px) {
+    .metric-value {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .metric-value {
+        font-size: 1.35rem;
+    }
+
+    .metric-title {
+        font-size: 0.85rem;
+    }
 }
