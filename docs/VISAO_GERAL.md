@@ -14,9 +14,9 @@
 
 ## 🎯 O Problema
 
-Donos de restaurantes como "Maria" gerenciam operações complexas através de múltiplos canais (presencial, iFood, Rappi, app próprio). Eles têm **dados valiosos**, mas não conseguem extrair **insights acionáveis** para tomar decisões de negócio.
+Donos de redes de restaurantes como **"Dona Maria"**, proprietária da rede **"Cozinha de Dona Maria"**, gerenciam operações complexas através de múltiplos canais (presencial, iFood, Rappi, app próprio). Eles têm **dados valiosos**, mas não conseguem extrair **insights acionáveis** para tomar decisões de negócio.
 
-**Perguntas que Maria não consegue responder facilmente:**
+**Perguntas que Maria não consegue responder facilmente sobre sua rede:**
 
 -   "Qual produto vende mais na quinta à noite no iFood?"
 -   "Meu ticket médio está caindo. É por canal ou por loja?"

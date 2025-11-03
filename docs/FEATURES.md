@@ -102,6 +102,8 @@ Se o usuário seleciona **01/10/2025 a 31/10/2025** (31 dias):
 ✅ **Decisões Informadas**: Detecta tendências e permite ações corretivas  
 ✅ **Sem Confusão**: Período de comparação sempre visível
 
+> **Exemplo de Uso**: Dona Maria, proprietária da rede "Cozinha de Dona Maria", pode comparar o faturamento de outubro com setembro para identificar se a nova promoção aumentou as vendas.
+
 ### Arquivos Modificados
 
 ```
@@ -242,7 +244,7 @@ Permite comparar a performance de 2 ou mais lojas lado a lado, visualizando mét
 
 #### 1. Identificar Melhor Loja
 
-**Pergunta**: "Qual loja performa melhor este mês?"
+**Pergunta da Dona Maria**: "Qual loja da Cozinha de Dona Maria performa melhor este mês?"
 
 -   Selecionar todas as lojas
 -   Filtrar mês atual
@@ -250,7 +252,7 @@ Permite comparar a performance de 2 ou mais lojas lado a lado, visualizando mét
 
 #### 2. Comparar Ticket Médio
 
-**Pergunta**: "Ticket médio caindo. É por loja?"
+**Pergunta da Dona Maria**: "O ticket médio da minha rede está caindo. É problema em alguma loja específica?"
 
 -   Selecionar lojas suspeitas
 -   Ver coluna "Ticket Médio"
@@ -258,7 +260,7 @@ Permite comparar a performance de 2 ou mais lojas lado a lado, visualizando mét
 
 #### 3. Analisar Eficiência
 
-**Pergunta**: "Qual loja prepara mais rápido?"
+**Pergunta**: "Qual loja da Cozinha de Dona Maria prepara mais rápido?"
 
 -   Comparar lojas
 -   Ver "Tempo Preparo"
@@ -266,7 +268,7 @@ Permite comparar a performance de 2 ou mais lojas lado a lado, visualizando mét
 
 #### 4. Avaliar Delivery
 
-**Pergunta**: "Entrega está boa em todas?"
+**Pergunta**: "Tempo de entrega está bom em todas as unidades?"
 
 -   Filtrar período recente
 -   Ver "Tempo Entrega"
@@ -443,7 +445,7 @@ id,name,type,total_sales,total_revenue
 
 #### 1. Reunião com Sócio
 
-**Necessidade**: "Apresentar resultados do mês"
+**Necessidade da Dona Maria**: "Preciso apresentar os resultados da Cozinha de Dona Maria para meu sócio"
 
 -   Exportar relatório completo
 -   Abrir no Excel
@@ -451,7 +453,7 @@ id,name,type,total_sales,total_revenue
 
 #### 2. Análise Profunda
 
-**Necessidade**: "Cruzar dados com outras fontes"
+**Necessidade**: "Quero cruzar dados de vendas com custos de fornecedores"
 
 -   Exportar produtos
 -   Importar no Excel
@@ -459,7 +461,7 @@ id,name,type,total_sales,total_revenue
 
 #### 3. Contabilidade
 
-**Necessidade**: "Contador pediu faturamento por canal"
+**Necessidade**: "Meu contador pediu o faturamento detalhado por canal"
 
 -   Filtrar período
 -   Exportar relatório
@@ -467,7 +469,7 @@ id,name,type,total_sales,total_revenue
 
 #### 4. Comparação Temporal
 
-**Necessidade**: "Outubro vs Setembro?"
+**Necessidade**: "Como outubro de 2025 compara com setembro para a rede?"
 
 -   Exportar outubro
 -   Exportar setembro
@@ -484,9 +486,9 @@ id,name,type,total_sales,total_revenue
 
 ### Benefícios
 
-✅ **Compartilhamento**: Email para sócio/gerentes  
+✅ **Compartilhamento**: Email para sócio/gerentes da rede  
 ✅ **Análise Offline**: Excel para análises avançadas  
-✅ **Registro Histórico**: Snapshots para comparação  
+✅ **Registro Histórico**: Snapshots mensais da Cozinha de Dona Maria  
 ✅ **Compliance**: Arquivo para auditoria  
 ✅ **Apresentações**: Importa para PowerPoint/Slides  
 ✅ **Integração**: Uso em outras ferramentas (BI)

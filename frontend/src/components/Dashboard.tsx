@@ -179,7 +179,7 @@ export function Dashboard() {
             <header className="dashboard-header">
                 <div className="header-content">
                     <div>
-                        <h1>📊 Analytics Restaurante</h1>
+                        <h1>📊 Dashboard da Cozinha de Dona Maria</h1>
                         <p>Análise de dados operacionais e vendas</p>
                     </div>
                     {!showStoreComparison && overview && (

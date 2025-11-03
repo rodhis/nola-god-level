@@ -39,14 +39,14 @@
 
 ## 🎯 O Problema
 
-Donos de restaurantes como **Maria** gerenciam operações complexas através de múltiplos canais:
+Donos de redes de restaurantes como **Dona Maria**, proprietária da rede **"Cozinha de Dona Maria"**, gerenciam operações complexas através de múltiplos canais:
 
 -   🏪 Venda presencial no balcão
 -   📱 iFood, Rappi, Uber Eats
 -   💬 WhatsApp
 -   🖥️ App próprio
 
-Eles têm **dados valiosos de 500k+ vendas**, mas não conseguem responder perguntas críticas:
+Eles têm **dados valiosos de 500k+ vendas**, mas não conseguem responder perguntas críticas sobre suas operações:
 
 -   ❓ _"Qual produto vende mais na quinta à noite no iFood?"_
 -   ❓ _"Meu ticket médio está caindo. É por canal ou por loja?"_
@@ -60,7 +60,7 @@ Eles têm **dados valiosos de 500k+ vendas**, mas não conseguem responder pergu
 
 ## ✨ A Solução
 
-**Nola Analytics** é uma plataforma web moderna que permite donos de restaurantes:
+**Nola Analytics** é uma plataforma web moderna que permite donos de redes de restaurantes como a **"Cozinha de Dona Maria"**:
 
 ✅ **Visualizar métricas relevantes** - Faturamento, produtos mais vendidos, horários de pico  
 ✅ **Criar análises personalizadas** - Filtros simples por período, loja e canal  
@@ -139,14 +139,14 @@ Eles têm **dados valiosos de 500k+ vendas**, mas não conseguem responder pergu
 
 ### 🔍 Sistema de Filtros
 
-Combine múltiplos filtros para análises personalizadas:
+Combine múltiplos filtros para análises personalizadas da rede:
 
 -   **📅 Período** - Selecione data inicial e final
--   **🏪 Loja** - Analise lojas específicas ou todas
+-   **🏪 Loja** - Analise lojas específicas ou todas as unidades
 -   **📱 Canal** - Presencial, delivery, apps
 -   **🔗 Combinado** - Aplique múltiplos filtros simultaneamente
 
-> **Exemplo**: "Vendas do iFood na loja Centro SP entre 01/01 e 31/01"
+> **Exemplo**: "Vendas do iFood na unidade Centro da Cozinha de Dona Maria entre 01/01 e 31/01"
 
 ---
 
@@ -156,7 +156,7 @@ Combine múltiplos filtros para análises personalizadas:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│  📊 Analytics Restaurante                                            │
+│  📊 Dashboard da Cozinha de Dona Maria                               │
 │  Análise de dados operacionais e vendas                             │
 ├──────────────────┬──────────────────┬──────────────┬────────────────┤
 │  💰 Faturamento  │  🎫 Ticket Médio │ 📊 Total     │ ⏱️ Preparo     │
