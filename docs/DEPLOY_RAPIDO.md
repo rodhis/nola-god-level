@@ -70,6 +70,7 @@ VERCEL_PREVIEW_ENABLED=true
 -   Render usa porta 10000 por padrão
 -   `FRONTEND_URL` deve ser preenchido após deploy do frontend (Passo 4 da Parte 2)
 -   `VERCEL_PREVIEW_ENABLED=true` permite que previews do Vercel funcionem
+-   `NODE_ENV=production` ativa SSL automático para Neon
 
 ### Passo 4: Selecionar Plano Gratuito
 
