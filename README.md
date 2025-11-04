@@ -290,8 +290,8 @@ nola-god-level/
 **Por quê?**
 
 -   ⚡ Performance: Connection pooling, queries otimizadas
--   🔒 Segurança: Prepared statements (previne SQL injection)
--   🧹 Código limpo: Arquitetura em camadas (Controllers → Services → DB)
+-   🔒 Segurança: Prepared statements, validação de entrada, variáveis de ambiente
+-   🧹 Código limpo: Arquitetura em camadas, código auto-documentado, TypeScript type-safe
 
 ### Frontend
 
@@ -383,143 +383,46 @@ curl "http://localhost:3001/api/analytics/overview?startDate=2024-01-01&endDate=
 
 Documentação completa disponível na pasta [`/docs`](./docs/):
 
-| Arquivo                                         | Descrição                                       |
-| ----------------------------------------------- | ----------------------------------------------- |
-| [VISAO_GERAL.md](./docs/VISAO_GERAL.md)         | Visão geral e introdução ao projeto             |
-| [ARQUITETURA.md](./docs/ARQUITETURA.md)         | Decisões arquiteturais, trade-offs, otimizações |
-| [FEATURES.md](./docs/FEATURES.md)               | 🆕 Features implementadas (consolidado)         |
-| [BIBLIOTECAS.md](./docs/BIBLIOTECAS.md)         | Explicação detalhada de cada dependência        |
-| [INSTALACAO.md](./docs/INSTALACAO.md)           | Instruções completas de setup                   |
-| [GUIA_TESTE.md](./docs/GUIA_TESTE.md)           | Como testar a aplicação                         |
-| [RESUMO_PROJETO.md](./docs/RESUMO_PROJETO.md)   | Overview executivo do projeto                   |
-| [STATUS_COMPLETO.md](./docs/STATUS_COMPLETO.md) | Checklist de funcionalidades implementadas      |
+| Arquivo                                 | Descrição                                                    |
+| --------------------------------------- | ------------------------------------------------------------ |
+| [ARQUITETURA.md](./docs/ARQUITETURA.md) | Decisões arquiteturais, trade-offs e justificativas técnicas |
+| [FEATURES.md](./docs/FEATURES.md)       | Documentação detalhada das 3 features principais             |
+| [BIBLIOTECAS.md](./docs/BIBLIOTECAS.md) | Explicação de cada dependência e alternativas consideradas   |
+| [SETUP.md](./docs/SETUP.md)             | Guia completo de instalação, testes e troubleshooting        |
+
+---
 
 ---
 
 ## 💻 Desenvolvimento
 
-### Setup Local
-
-#### Backend
-
-```bash
-# Navegar para o backend
-cd backend
-
-# Instalar dependências
-npm install
-
-# Configurar variáveis de ambiente
-# Crie um arquivo .env com suas credenciais do PostgreSQL
-# Exemplo:
-# DB_HOST=localhost
-# DB_PORT=5432
-# DB_NAME=nola_restaurant
-# DB_USER=postgres
-# DB_PASSWORD=postgres
-
-# Iniciar em modo desenvolvimento (hot reload)
-npm run dev
-
-# Build para produção
-npm run build
-npm start
-```
-
-#### Frontend
-
-```bash
-# Navegar para o frontend
-cd frontend
-
-# Instalar dependências
-npm install
-
-# Iniciar em modo desenvolvimento (hot reload)
-npm run dev
-
-# Build para produção
-npm run build
-npm run preview
-```
-
-### Estrutura de Comandos
+### Setup Local Rápido
 
 ```bash
 # Backend
-npm run dev          # Desenvolvimento com hot reload
-npm run build        # Compilar TypeScript
-npm start            # Produção
-npm run typecheck    # Verificar tipos
+cd backend && npm install && npm run dev
 
-# Frontend
-npm run dev          # Desenvolvimento com Vite
-npm run build        # Build otimizado
-npm run preview      # Preview do build
-npm run typecheck    # Verificar tipos
+# Frontend (novo terminal)
+cd frontend && npm install && npm run dev
+
+# Database
+docker-compose up postgres -d
 ```
 
-### Desenvolvimento com Docker
-
-```bash
-# Iniciar todos os serviços
-docker-compose up -d
-
-# Ver logs em tempo real
-docker-compose logs -f backend
-docker-compose logs -f frontend
-
-# Rebuild após mudanças
-docker-compose up -d --build
-
-# Parar todos os serviços
-docker-compose down
-
-# Limpar tudo (incluindo volumes)
-docker-compose down -v
-```
+**Para instruções detalhadas, troubleshooting e testes**: Ver [docs/SETUP.md](./docs/SETUP.md)
 
 ---
 
 ## 🚢 Deploy
 
-### Opções de Deploy
+Aplicação pronta para deploy em:
 
-#### 1. Docker Compose (Recomendado para VPS)
+-   **Docker Compose** (VPS/Cloud): `docker-compose up -d`
+-   **Frontend**: Vercel, Netlify, Cloudflare Pages
+-   **Backend**: Railway, Render, Heroku
+-   **Database**: Supabase, Railway, DigitalOcean
 
-```bash
-# Servidor com Docker instalado
-git clone <repo-url>
-cd nola-god-level
-docker-compose up -d
-```
-
-#### 2. Serviços Separados
-
-**Frontend** - Vercel, Netlify, Cloudflare Pages:
-
-```bash
-cd frontend
-npm run build
-# Deploy da pasta dist/
-```
-
-**Backend** - Heroku, Railway, Render:
-
-```bash
-cd backend
-# Configurar variáveis de ambiente
-# Deploy via Git push
-```
-
-**Database** - Supabase, Railway, DigitalOcean:
-
--   PostgreSQL gerenciado
--   Importar schema: `database-schema.sql`
-
-#### 3. Kubernetes (Para escala)
-
-Helm charts e manifests podem ser criados sob demanda.
+Para configuração específica de cada plataforma, consulte a documentação da plataforma escolhida.
 
 ---
 
@@ -535,9 +438,11 @@ Helm charts e manifests podem ser criados sob demanda.
 
 ### Otimizações Implementadas
 
--   Connection pooling PostgreSQL
+-   Connection pooling PostgreSQL (20 conexões simultâneas)
 -   Agregações no banco (não no backend)
--   Queries parametrizadas (previne SQL injection)
+-   Queries parametrizadas com prepared statements (previne SQL injection)
+-   Validação de entrada com parseIntSafe() (previne NaN)
+-   Código auto-documentado com TypeScript types
 -   Frontend com CSS puro (zero overhead)
 -   Vite com tree-shaking e code splitting
 

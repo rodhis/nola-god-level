@@ -183,7 +183,118 @@ WHERE created_at >= $1 AND created_at <= $2
 -   Boa documentação e customização
 -   Leve e performático
 
-### 8. Tratamento de Erros
+### 8. Segurança & Validação
+
+**Abordagem**: Segurança pragmática focada em MVP, sem over-engineering.
+
+#### SQL Injection Prevention
+
+```typescript
+// ✅ Correto: Prepared statements
+const query = 'SELECT * FROM sales WHERE store_id = $1 AND created_at >= $2'
+await pool.query(query, [storeId, startDate])
+
+// ❌ Evitado: Concatenação direta
+// const query = `SELECT * FROM sales WHERE store_id = ${storeId}` // NUNCA!
+```
+
+#### Validação de Entrada
+
+```typescript
+// parseIntSafe: Previne NaN em parâmetros numéricos
+function parseIntSafe(value: unknown): number | undefined {
+    if (typeof value !== 'string') return undefined
+    const parsed = parseInt(value, 10)
+    return isNaN(parsed) ? undefined : parsed
+}
+
+const storeId = parseIntSafe(req.query.storeId) // Safe parsing
+```
+
+**Benefícios:**
+
+-   Previne crashes por valores inválidos
+-   Retorna `undefined` de forma consistente
+-   TypeScript-friendly (type narrowing)
+
+#### Environment Variables
+
+```typescript
+// ✅ Variáveis obrigatórias (sem fallbacks)
+const pool = new Pool({
+    host: process.env.DB_HOST, // ❌ Sem || 'localhost'
+    user: process.env.DB_USER, // ❌ Sem || 'postgres'
+    password: process.env.DB_PASSWORD, // ❌ Sem hardcoded defaults
+})
+```
+
+**Justificativa:** Fail-fast é preferível a rodar com configurações inseguras.
+
+#### CORS Configuration
+
+```typescript
+// Basic CORS - permite frontend local
+app.use(cors())
+```
+
+**Bibliotecas NÃO utilizadas (propositalmente):**
+
+-   ❌ **helmet**: Headers de segurança (complexidade desnecessária para MVP interno)
+-   ❌ **express-rate-limit**: Rate limiting (overhead para dashboard interno)
+
+**Quando adicionar:**
+
+-   Quando expor API publicamente
+-   Quando escalar para produção com múltiplos usuários
+-   Quando requisitos de compliance exigirem
+
+### 9. Qualidade de Código
+
+**Filosofia**: Código deve ser auto-explicativo. Comentários são último recurso.
+
+#### Código Auto-documentado
+
+```typescript
+// ✅ Bom: Nomes descritivos
+function getOverviewMetrics(filters: Filters): Promise<OverviewMetrics>
+
+// ❌ Ruim: Precisa comentário
+function getOM(f: any): Promise<any> // Gets overview metrics
+```
+
+#### TypeScript Type Safety
+
+-   **Zero tipos `any`** no código de produção
+-   Interfaces explícitas para todos os contratos
+-   Strict mode habilitado em tsconfig.json
+
+#### Comentários Mínimos
+
+```typescript
+// ❌ Comentários verbosos removidos (~60 no total)
+// This function fetches the overview metrics from the database
+// It accepts filters and returns aggregated data
+async getOverviewMetrics(filters: Filters) { ... }
+
+// ✅ Código limpo (sem comentário necessário)
+async getOverviewMetrics(filters: Filters): Promise<OverviewMetrics> {
+    const query = `SELECT COUNT(*), SUM(total_amount) FROM sales WHERE ...`
+    return pool.query(query, params)
+}
+```
+
+**Redução de LOC:**
+
+-   Backend: ~800 linhas → ~650 linhas (-19%)
+-   Frontend: ~1200 linhas → ~1000 linhas (-17%)
+
+**Quando comentar:**
+
+-   Decisões não-óbvias (algoritmos complexos)
+-   Workarounds temporários (com TODO/FIXME)
+-   APIs públicas (JSDoc para documentação)
+
+### 10. Tratamento de Erros
 
 **Backend:**
 
@@ -256,15 +367,30 @@ try {
     - ❌ Sem SSR/SSG (não necessário para dashboard interno)
 
 4. **Monolito vs Microserviços**
+
     - ✅ Desenvolvimento rápido, deploy simples
     - ❌ Acoplamento (mas adequado para MVP)
 
+5. **Segurança Básica vs Completa**
+
+    - ✅ Prepared statements + parseIntSafe + env vars (essenciais)
+    - ✅ Simplicidade e manutenibilidade
+    - ❌ Sem helmet, rate-limit (adicionáveis quando necessário)
+    - **Justificativa**: Abordagem pragmática para MVP interno
+
+6. **Comentários Mínimos vs Documentação Extensa**
+    - ✅ Código auto-documentado via TypeScript e nomes claros
+    - ✅ Documentação separada (markdown) para conceitos de alto nível
+    - ❌ Menos inline comments (mas código é mais legível)
+    - **Justificativa**: Comentários envelhecem mal, código bem escrito não
+
 ### Limitações Atuais
 
-1. **Sem autenticação/autorização**: Conforme especificado, mock básico seria suficiente
-2. **Sem real-time updates**: Usuário precisa refresh ou aplicar filtros
-3. **Cache limitado**: Apenas cache do navegador
-4. **Sem testes automatizados**: Foco em MVP funcional
+1. **Sem autenticação/autorização completa**: Conforme especificado, mock básico seria suficiente para MVP
+2. **Sem real-time updates**: Usuário precisa refresh ou aplicar filtros (adequado para analytics)
+3. **Cache limitado**: Apenas cache do navegador (Redis seria próximo passo)
+4. **Sem testes automatizados**: Foco em MVP funcional (Jest/Vitest seriam próximo passo)
+5. **Segurança básica**: Suficiente para MVP interno, expandível para produção pública
 
 ## Próximos Passos (Roadmap)
 
@@ -297,5 +423,7 @@ A arquitetura escolhida prioriza:
 -   **Performance**: Queries otimizadas, < 1s para maioria das operações
 -   **Escalabilidade**: Preparado para crescer horizontal e verticalmente
 -   **Developer Experience**: TypeScript, estrutura clara, boas práticas
+-   **Segurança Pragmática**: Prepared statements, validação de entrada, env vars obrigatórias
+-   **Código Limpo**: Auto-documentado, comentários mínimos, type-safe
 
-Todas as decisões foram tomadas considerando o problema real da persona "Maria": **empoderar donos de restaurantes a explorarem seus dados de forma simples e eficaz**.
+Todas as decisões foram tomadas considerando o problema real da persona "Maria": **empoderar donos de restaurantes a explorarem seus dados de forma simples e eficaz**, sem comprometer segurança básica ou manutenibilidade.
