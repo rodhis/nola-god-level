@@ -9,7 +9,18 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 3001
 
-app.use(cors())
+// Configure CORS
+app.use(
+    cors({
+        origin: [
+            'http://localhost:5173', // Vite dev server
+            'http://localhost:3000', // Alternative dev port
+            'https://nola-analytics.vercel.app', // Production frontend
+            /\.vercel\.app$/, // All Vercel preview deployments
+        ],
+        credentials: true,
+    })
+)
 app.use(express.json())
 
 // Health check endpoint
