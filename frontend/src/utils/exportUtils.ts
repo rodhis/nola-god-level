@@ -1,32 +1,18 @@
-/**
- * Export Utilities
- * Helper functions to export data as CSV files
- */
-
-/**
- * Convert array of objects to CSV string
- */
 export function convertToCSV(data: any[], headers?: string[]): string {
     if (!data || data.length === 0) {
         return ''
     }
 
-    // Get headers from first object if not provided
     const csvHeaders = headers || Object.keys(data[0])
-
-    // Create header row
     const headerRow = csvHeaders.join(',')
 
-    // Create data rows
     const dataRows = data.map((row) => {
         return csvHeaders
             .map((header) => {
                 const value = row[header]
-                // Handle null/undefined
                 if (value === null || value === undefined) {
                     return ''
                 }
-                // Escape quotes and wrap in quotes if contains comma or quotes
                 const stringValue = String(value)
                 if (stringValue.includes(',') || stringValue.includes('"') || stringValue.includes('\n')) {
                     return `"${stringValue.replace(/"/g, '""')}"`
@@ -39,9 +25,6 @@ export function convertToCSV(data: any[], headers?: string[]): string {
     return [headerRow, ...dataRows].join('\n')
 }
 
-/**
- * Download CSV file
- */
 export function downloadCSV(csvContent: string, filename: string): void {
     // Add BOM for proper UTF-8 encoding (Excel compatibility)
     const BOM = '\uFEFF'
@@ -60,9 +43,6 @@ export function downloadCSV(csvContent: string, filename: string): void {
     }
 }
 
-/**
- * Format date for filename
- */
 export function getFormattedDate(): string {
     const now = new Date()
     const year = now.getFullYear()
@@ -73,9 +53,6 @@ export function getFormattedDate(): string {
     return `${year}${month}${day}_${hours}${minutes}`
 }
 
-/**
- * Export products data as CSV
- */
 export function exportProductsCSV(products: any[]): void {
     const headers = ['id', 'name', 'category', 'total_quantity', 'total_revenue', 'times_sold']
     const csvContent = convertToCSV(products, headers)
@@ -83,9 +60,6 @@ export function exportProductsCSV(products: any[]): void {
     downloadCSV(csvContent, filename)
 }
 
-/**
- * Export channels data as CSV
- */
 export function exportChannelsCSV(channels: any[]): void {
     const headers = ['id', 'name', 'type', 'total_sales', 'total_revenue', 'avg_ticket']
     const csvContent = convertToCSV(channels, headers)
@@ -93,9 +67,6 @@ export function exportChannelsCSV(channels: any[]): void {
     downloadCSV(csvContent, filename)
 }
 
-/**
- * Export stores comparison as CSV
- */
 export function exportStoresCSV(stores: any[]): void {
     const headers = [
         'id',
@@ -115,9 +86,6 @@ export function exportStoresCSV(stores: any[]): void {
     downloadCSV(csvContent, filename)
 }
 
-/**
- * Export time series data as CSV
- */
 export function exportTimeSeriesCSV(timeSeries: any[]): void {
     const headers = ['date', 'sales_count', 'revenue', 'avg_ticket']
     const csvContent = convertToCSV(timeSeries, headers)
@@ -125,9 +93,6 @@ export function exportTimeSeriesCSV(timeSeries: any[]): void {
     downloadCSV(csvContent, filename)
 }
 
-/**
- * Export overview metrics as CSV
- */
 export function exportOverviewCSV(overview: any, period?: { startDate: string; endDate: string }): void {
     const data = [
         {
@@ -172,9 +137,6 @@ export function exportOverviewCSV(overview: any, period?: { startDate: string; e
     downloadCSV(csvContent, filename)
 }
 
-/**
- * Export complete dashboard report as CSV
- */
 export function exportCompleteReportCSV(
     overview: any,
     products: any[],
@@ -201,28 +163,14 @@ export function exportCompleteReportCSV(
     // Products section
     if (products && products.length > 0) {
         csvContent += '## PRODUTOS MAIS VENDIDOS\n'
-        csvContent += convertToCSV(products, [
-            'id',
-            'name',
-            'category',
-            'total_quantity',
-            'total_revenue',
-            'times_sold',
-        ])
+        csvContent += convertToCSV(products, ['id', 'name', 'category', 'total_quantity', 'total_revenue', 'times_sold'])
         csvContent += '\n\n'
     }
 
     // Channels section
     if (channels && channels.length > 0) {
         csvContent += '## VENDAS POR CANAL\n'
-        csvContent += convertToCSV(channels, [
-            'id',
-            'name',
-            'type',
-            'total_sales',
-            'total_revenue',
-            'avg_ticket',
-        ])
+        csvContent += convertToCSV(channels, ['id', 'name', 'type', 'total_sales', 'total_revenue', 'avg_ticket'])
         csvContent += '\n'
     }
 

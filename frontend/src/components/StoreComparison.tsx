@@ -33,7 +33,6 @@ export function StoreComparison({ stores, onClose }: StoreComparisonProps) {
         exportStoresCSV(stores)
     }
 
-    // Prepare data for charts
     const revenueChartData = stores.map((store) => ({
         name: store.name,
         revenue: parseFloat((store.total_revenue || 0).toString()),
@@ -87,16 +86,12 @@ export function StoreComparison({ stores, onClose }: StoreComparisonProps) {
                                 <td>
                                     <div className="metric-cell">
                                         <div className="metric-main">{formatNumber(store.total_sales)}</div>
-                                        <div className="metric-sub">
-                                            {formatNumber(store.completed_sales)} completadas
-                                        </div>
+                                        <div className="metric-sub">{formatNumber(store.completed_sales)} completadas</div>
                                     </div>
                                 </td>
                                 <td>
                                     <div className="metric-cell">
-                                        <div className="metric-main">
-                                            {formatCurrency(store.total_revenue)}
-                                        </div>
+                                        <div className="metric-main">{formatCurrency(store.total_revenue)}</div>
                                     </div>
                                 </td>
                                 <td>
@@ -106,9 +101,7 @@ export function StoreComparison({ stores, onClose }: StoreComparisonProps) {
                                 </td>
                                 <td>
                                     <div className="metric-cell">
-                                        <div className="metric-main">
-                                            {formatTime(store.avg_production_time)}
-                                        </div>
+                                        <div className="metric-main">{formatTime(store.avg_production_time)}</div>
                                     </div>
                                 </td>
                                 <td>

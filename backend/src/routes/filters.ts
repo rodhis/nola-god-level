@@ -3,11 +3,6 @@ import pool from '../config/database'
 
 const router = Router()
 
-/**
- * Filter Routes - Provide data for filter dropdowns
- */
-
-// GET /api/filters/stores - Get all stores
 router.get('/stores', async (req: Request, res: Response) => {
     try {
         const result = await pool.query(`
@@ -23,7 +18,6 @@ router.get('/stores', async (req: Request, res: Response) => {
     }
 })
 
-// GET /api/filters/channels - Get all channels
 router.get('/channels', async (req: Request, res: Response) => {
     try {
         const result = await pool.query(`
@@ -38,7 +32,6 @@ router.get('/channels', async (req: Request, res: Response) => {
     }
 })
 
-// GET /api/filters/date-range - Get min and max dates from sales
 router.get('/date-range', async (req: Request, res: Response) => {
     try {
         const result = await pool.query(`

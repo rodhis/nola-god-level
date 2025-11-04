@@ -4,12 +4,7 @@ import { filtersApi } from '../services/api'
 import './FilterBar.css'
 
 interface FilterBarProps {
-    onFilterChange: (filters: {
-        startDate?: string
-        endDate?: string
-        storeId?: number
-        channelId?: number
-    }) => void
+    onFilterChange: (filters: { startDate?: string; endDate?: string; storeId?: number; channelId?: number }) => void
     onCompareStores?: (storeIds: number[]) => void
 }
 
@@ -46,7 +41,6 @@ export function FilterBar({ onFilterChange, onCompareStores }: FilterBarProps) {
             setStores(storesData)
             setChannels(channelsData)
 
-            // Set default date range to last 30 days
             if (dateRange.max_date) {
                 const maxDate = new Date(dateRange.max_date)
                 const minDate = new Date(maxDate)
@@ -104,9 +98,7 @@ export function FilterBar({ onFilterChange, onCompareStores }: FilterBarProps) {
                         <label>Loja</label>
                         <select
                             value={storeId || ''}
-                            onChange={(e) =>
-                                setStoreId(e.target.value ? parseInt(e.target.value) : undefined)
-                            }
+                            onChange={(e) => setStoreId(e.target.value ? parseInt(e.target.value) : undefined)}
                         >
                             <option value="">Todas as lojas</option>
                             {stores.map((store) => (
@@ -144,11 +136,7 @@ export function FilterBar({ onFilterChange, onCompareStores }: FilterBarProps) {
                     </div>
 
                     <div className="comparison-actions">
-                        <button
-                            onClick={handleCompareStores}
-                            className="compare-button"
-                            disabled={selectedStores.length < 2}
-                        >
+                        <button onClick={handleCompareStores} className="compare-button" disabled={selectedStores.length < 2}>
                             Comparar ({selectedStores.length})
                         </button>
                         <button onClick={() => setShowComparisonMode(false)} className="cancel-button">

@@ -10,14 +10,7 @@ export interface Filters extends DateRange {
     channelId?: number
 }
 
-/**
- * AnalyticsService - Core business logic for analytics queries
- * Handles all database queries with optimizations for performance
- */
 export class AnalyticsService {
-    /**
-     * Get overview metrics: total revenue, sales count, average ticket, cancelled rate
-     */
     async getOverviewMetrics(filters: Filters) {
         const { startDate, endDate, storeId, channelId } = filters
 
@@ -59,9 +52,6 @@ export class AnalyticsService {
         return result.rows[0]
     }
 
-    /**
-     * Get top selling products with revenue and quantity
-     */
     async getTopProducts(filters: Filters, limit: number = 10) {
         const { startDate, endDate, storeId, channelId } = filters
 
@@ -110,9 +100,6 @@ export class AnalyticsService {
         return result.rows
     }
 
-    /**
-     * Get sales distribution by channel
-     */
     async getSalesByChannel(filters: DateRange) {
         const { startDate, endDate } = filters
 
@@ -148,9 +135,6 @@ export class AnalyticsService {
         return result.rows
     }
 
-    /**
-     * Get sales time series (daily aggregation)
-     */
     async getSalesTimeSeries(filters: Filters) {
         const { startDate, endDate, storeId, channelId } = filters
 
@@ -191,9 +175,6 @@ export class AnalyticsService {
         return result.rows
     }
 
-    /**
-     * Get sales by hour of day
-     */
     async getSalesByHour(filters: Filters) {
         const { startDate, endDate, storeId, channelId } = filters
 
@@ -233,9 +214,6 @@ export class AnalyticsService {
         return result.rows
     }
 
-    /**
-     * Get sales by day of week
-     */
     async getSalesByWeekday(filters: Filters) {
         const { startDate, endDate, storeId, channelId } = filters
 
@@ -276,9 +254,6 @@ export class AnalyticsService {
         return result.rows
     }
 
-    /**
-     * Get top stores by revenue
-     */
     async getTopStores(filters: DateRange, limit: number = 10) {
         const { startDate, endDate } = filters
 
@@ -318,9 +293,6 @@ export class AnalyticsService {
         return result.rows
     }
 
-    /**
-     * Get top customizations/items added to products
-     */
     async getTopCustomizations(filters: Filters, limit: number = 10) {
         const { startDate, endDate, storeId, channelId } = filters
 
@@ -367,16 +339,10 @@ export class AnalyticsService {
         return result.rows
     }
 
-    /**
-     * Get overview metrics with comparison to previous period
-     * Automatically calculates the previous period based on the current date range
-     */
     async getOverviewMetricsWithComparison(filters: Filters) {
         const currentMetrics = await this.getOverviewMetrics(filters)
 
-        // Calculate previous period
         if (!filters.startDate || !filters.endDate) {
-            // If no date range specified, return current metrics only
             return {
                 current: currentMetrics,
                 previous: null,
@@ -402,7 +368,6 @@ export class AnalyticsService {
 
         const previousMetrics = await this.getOverviewMetrics(previousFilters)
 
-        // Calculate percentage changes
         const calculateChange = (current: number, previous: number) => {
             if (previous === 0) return current > 0 ? 100 : 0
             return ((current - previous) / previous) * 100
@@ -413,14 +378,8 @@ export class AnalyticsService {
                 parseFloat(currentMetrics.total_revenue),
                 parseFloat(previousMetrics.total_revenue)
             ),
-            total_sales_change: calculateChange(
-                parseInt(currentMetrics.total_sales),
-                parseInt(previousMetrics.total_sales)
-            ),
-            avg_ticket_change: calculateChange(
-                parseFloat(currentMetrics.avg_ticket),
-                parseFloat(previousMetrics.avg_ticket)
-            ),
+            total_sales_change: calculateChange(parseInt(currentMetrics.total_sales), parseInt(previousMetrics.total_sales)),
+            avg_ticket_change: calculateChange(parseFloat(currentMetrics.avg_ticket), parseFloat(previousMetrics.avg_ticket)),
             avg_production_time_change: calculateChange(
                 parseFloat(currentMetrics.avg_production_time),
                 parseFloat(previousMetrics.avg_production_time)
@@ -444,10 +403,6 @@ export class AnalyticsService {
         }
     }
 
-    /**
-     * Compare multiple stores side by side
-     * Returns metrics for each specified store
-     */
     async compareStores(filters: DateRange, storeIds: number[]) {
         const { startDate, endDate } = filters
 
@@ -468,7 +423,6 @@ export class AnalyticsService {
             params.push(endDate)
         }
 
-        // Add store IDs filter
         conditions.push(`s.store_id = ANY($${paramCount++})`)
         params.push(storeIds)
 

@@ -6,16 +6,7 @@ import { StoreComparison } from './StoreComparison'
 import { ExportButton } from './ExportButton'
 import { analyticsApi } from '../services/api'
 import { exportProductsCSV, exportCompleteReportCSV } from '../utils/exportUtils'
-import {
-    Filters,
-    OverviewMetrics,
-    Product,
-    Channel,
-    Store,
-    TimeSeriesData,
-    HourlyData,
-    WeekdayData,
-} from '../interfaces'
+import { Filters, OverviewMetrics, Product, Channel, Store, TimeSeriesData, HourlyData, WeekdayData } from '../interfaces'
 import './Dashboard.css'
 
 const WEEKDAY_NAMES = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
@@ -49,21 +40,15 @@ export function Dashboard() {
     const loadDashboardData = async () => {
         setLoading(true)
         try {
-            const [
-                overviewDataWithComparison,
-                productsData,
-                channelsData,
-                timeSeriesData,
-                hourlyDataRes,
-                weekdayDataRes,
-            ] = await Promise.all([
-                analyticsApi.getOverviewWithComparison(filters),
-                analyticsApi.getTopProducts(filters, 10),
-                analyticsApi.getSalesByChannel(filters),
-                analyticsApi.getSalesTimeSeries(filters),
-                analyticsApi.getSalesByHour(filters),
-                analyticsApi.getSalesByWeekday(filters),
-            ])
+            const [overviewDataWithComparison, productsData, channelsData, timeSeriesData, hourlyDataRes, weekdayDataRes] =
+                await Promise.all([
+                    analyticsApi.getOverviewWithComparison(filters),
+                    analyticsApi.getTopProducts(filters, 10),
+                    analyticsApi.getSalesByChannel(filters),
+                    analyticsApi.getSalesTimeSeries(filters),
+                    analyticsApi.getSalesByHour(filters),
+                    analyticsApi.getSalesByWeekday(filters),
+                ])
 
             setOverview(overviewDataWithComparison.current)
             setComparison(overviewDataWithComparison.comparison)
@@ -110,9 +95,7 @@ export function Dashboard() {
 
     const getComparisonPeriodText = () => {
         if (!comparisonPeriod) return null
-        return `${formatDate(comparisonPeriod.previous.startDate)} a ${formatDate(
-            comparisonPeriod.previous.endDate
-        )}`
+        return `${formatDate(comparisonPeriod.previous.startDate)} a ${formatDate(comparisonPeriod.previous.endDate)}`
     }
 
     const getTrend = (changeValue: number | undefined) => {
@@ -141,7 +124,6 @@ export function Dashboard() {
         setComparedStores([])
     }
 
-    // Export handlers
     const handleExportProducts = () => {
         exportProductsCSV(topProducts)
     }
@@ -152,7 +134,6 @@ export function Dashboard() {
         }
     }
 
-    // Process data for charts
     const timeSeriesChartData = timeSeries.map((d) => ({
         ...d,
         date: new Date(d.date).toLocaleDateString('pt-BR'),
@@ -242,9 +223,7 @@ export function Dashboard() {
                                     value={formatTime(parseFloat(overview.avg_production_time.toString()))}
                                     subtitle={
                                         overview.avg_delivery_time
-                                            ? `Entrega: ${formatTime(
-                                                  parseFloat(overview.avg_delivery_time.toString())
-                                              )}`
+                                            ? `Entrega: ${formatTime(parseFloat(overview.avg_delivery_time.toString()))}`
                                             : undefined
                                     }
                                     trend={getTrend(comparison?.avg_production_time_change)}
@@ -278,7 +257,6 @@ export function Dashboard() {
                                 </section>
                             )}
 
-                            {/* Sales by Hour */}
                             {hourlyData.length > 0 && (
                                 <section className="chart-section">
                                     <Chart
@@ -329,11 +307,7 @@ export function Dashboard() {
                                                     <td>{product.name}</td>
                                                     <td>{product.category || 'N/A'}</td>
                                                     <td>{formatNumber(product.total_quantity)}</td>
-                                                    <td>
-                                                        {formatCurrency(
-                                                            parseFloat(product.total_revenue.toString())
-                                                        )}
-                                                    </td>
+                                                    <td>{formatCurrency(parseFloat(product.total_revenue.toString()))}</td>
                                                     <td>{formatNumber(product.times_sold)}</td>
                                                 </tr>
                                             ))}

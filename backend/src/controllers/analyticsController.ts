@@ -1,18 +1,13 @@
 import { Request, Response } from 'express'
 import analyticsService from '../services/analyticsService'
 
-/**
- * Helper function to safely parse integer parameters
- */
+// Helper function to safely parse integer parameters
 function parseIntSafe(value: unknown): number | undefined {
     if (typeof value !== 'string') return undefined
     const parsed = parseInt(value, 10)
     return isNaN(parsed) ? undefined : parsed
 }
 
-/**
- * AnalyticsController - Handles HTTP requests for analytics endpoints
- */
 export class AnalyticsController {
     async getOverview(req: Request, res: Response) {
         try {
@@ -173,7 +168,6 @@ export class AnalyticsController {
                 endDate: req.query.endDate as string | undefined,
             }
 
-            // Parse store IDs from comma-separated string or array
             let storeIds: number[] = []
             if (req.query.storeIds) {
                 if (typeof req.query.storeIds === 'string') {

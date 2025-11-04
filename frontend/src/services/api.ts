@@ -10,11 +10,6 @@ import {
     Customization,
 } from '../interfaces'
 
-/**
- * API Service - Handles all HTTP requests to the backend
- * Routes are proxied through Vite dev server to /api
- */
-
 export const analyticsApi = {
     async getOverview(filters: Filters): Promise<OverviewMetrics> {
         const params = new URLSearchParams()
