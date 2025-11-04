@@ -26,6 +26,17 @@ interface ChartProps<T = Record<string, unknown>> {
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D', '#FFC658', '#FF6B9D']
 
+// Accessory function to translate sql column names to portuguese labels
+const translateLabel = (key: string): string => {
+    const translations: Record<string, string> = {
+        revenue: 'Faturamento',
+        sales_count: 'Quantidade de Vendas',
+        ticket: 'Ticket Médio',
+        sales: 'Vendas',
+    }
+    return translations[key] || key
+}
+
 export function Chart({ data, type, dataKey, xAxisKey, title, yAxisLabel }: ChartProps) {
     const renderChart = () => {
         if (type === 'line') {
@@ -51,7 +62,7 @@ export function Chart({ data, type, dataKey, xAxisKey, title, yAxisLabel }: Char
                                 return value
                             }}
                         />
-                        <Legend />
+                        <Legend formatter={translateLabel} />
                         <Line type="monotone" dataKey={dataKey} stroke="#0088FE" strokeWidth={2} />
                     </LineChart>
                 </ResponsiveContainer>
@@ -81,7 +92,7 @@ export function Chart({ data, type, dataKey, xAxisKey, title, yAxisLabel }: Char
                                 return value
                             }}
                         />
-                        <Legend />
+                        <Legend formatter={translateLabel} />
                         <Bar dataKey={dataKey} fill="#0088FE" />
                     </BarChart>
                 </ResponsiveContainer>
@@ -112,7 +123,7 @@ export function Chart({ data, type, dataKey, xAxisKey, title, yAxisLabel }: Char
                             return value
                         }}
                     />
-                    <Legend />
+                    <Legend formatter={translateLabel} />
                 </PieChart>
             </ResponsiveContainer>
         )
