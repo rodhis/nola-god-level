@@ -498,6 +498,11 @@ Ver [docs/DEPLOY_RAPIDO.md](./docs/DEPLOY_RAPIDO.md) para detalhes completos.
 
 ---
 
+### Nota Final
+
+A plataforma Railway não mais permite deploys de graça. A alternativa que encontrei foi o Neon. Como o banco de dados é muito grande talvez o mesmo o deixe indisponível em algum momento por eu estar usando o plano grátis. Mas não encontrei uma alternativa grátis melhor.
+
+
 ## 📄 Licença
 
 Este projeto foi desenvolvido para o **Nola God Level Coder Challenge 2025**.
