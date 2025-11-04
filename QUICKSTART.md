@@ -6,7 +6,7 @@ ATENÇÃO: essa é uma sugestão de setup, não é obrigatório que se rode dess
 
 ```bash
 # 1. Clone
-git clone https://github.com/lucasvieira94/nola-god-level.git
+git clone https://github.com/rodhis/nola-god-level.git
 cd nola-god-level
 
 

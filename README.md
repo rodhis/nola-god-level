@@ -201,38 +201,21 @@ Combine múltiplos filtros para análises personalizadas da rede:
 
 ## 🚀 Quick Start
 
-### Pré-requisitos
-
--   🐳 **Docker** e **Docker Compose** instalados
--   🐘 Dados já gerados no PostgreSQL (conforme [QUICKSTART.md](./QUICKSTART.md))
-
-### Instalação e Execução
-
 ```bash
-# 1. Clone o repositório
-git clone https://github.com/lucasvieira94/nola-god-level.git
+# 1. Clone e entre no diretório
+git clone https://github.com/rodhis/nola-god-level.git
 cd nola-god-level
 
 # 2. Inicie todos os serviços
 docker-compose up -d
 
-# 3. Aguarde a inicialização (~10 segundos)
-sleep 10
-
-# 4. Acesse o dashboard
+# 3. Acesse o dashboard
 open http://localhost:3000
 ```
 
-**✨ Pronto!** O dashboard está rodando com 500k+ vendas prontas para análise.
+**🎯 Demo Online**: https://nola-analytics.vercel.app
 
-### URLs dos Serviços
-
-| Serviço     | URL                          | Descrição           |
-| ----------- | ---------------------------- | ------------------- |
-| 🎨 Frontend | http://localhost:3000        | Dashboard principal |
-| 🔌 Backend  | http://localhost:3001        | API REST            |
-| 🐘 Database | localhost:5432               | PostgreSQL          |
-| 🔍 Health   | http://localhost:3001/health | Status da API       |
+**📚 Setup detalhado**: Ver [docs/SETUP.md](./docs/SETUP.md) para instruções completas, testes e troubleshooting.
 
 ---
 
@@ -429,40 +412,18 @@ docker-compose up postgres -d
 
 ### 🔒 Configuração de CORS
 
-O backend usa **CORS configurável via variáveis de ambiente** (sem hardcoding):
+### 🔒 Configuração
 
-```typescript
-// backend/src/index.ts
-const allowedOrigins: (string | RegExp)[] = [
-    'http://localhost:5173', // Vite dev
-    'http://localhost:3000', // Alternative port
-]
+**CORS configurável via ambiente** (sem hardcoding):
+- ✅ Reutilizável por outros projetos
+- ✅ Suporta múltiplos ambientes
+- ✅ Suporta preview deployments
 
-if (process.env.FRONTEND_URL) {
-    allowedOrigins.push(process.env.FRONTEND_URL)
-}
+**SSL automático** em produção para banco de dados.
 
-if (process.env.VERCEL_PREVIEW_ENABLED === 'true') {
-    allowedOrigins.push(/\.vercel\.app$/)
-}
-```
+Ver [docs/ARQUITETURA.md](./docs/ARQUITETURA.md) para detalhes técnicos.
 
-**Benefícios:**
-
--   ✅ Reutilizável por outros projetos
--   ✅ Suporta múltiplos ambientes (dev, staging, production)
--   ✅ Suporta preview deployments
-
-### 🗄️ Configuração SSL do Banco
-
-SSL é ativado automaticamente em produção:
-
-```typescript
-// backend/src/config/database.ts
-ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined
-```
-
-**Para instruções detalhadas, troubleshooting e testes**: Ver [docs/SETUP.md](./docs/SETUP.md)
+**Para instruções detalhadas**: Ver [docs/SETUP.md](./docs/SETUP.md)
 
 ---
 
@@ -470,52 +431,44 @@ ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : und
 
 ### ✅ Aplicação em Produção
 
-A aplicação está rodando em produção:
+## 🚢 Deploy
 
--   **🌐 Frontend:** [https://nola-analytics.vercel.app](https://nola-analytics.vercel.app) (Vercel)
--   **🔧 Backend:** [https://nola-analytics.onrender.com](https://nola-analytics.onrender.com) (Render)
+### ✅ Aplicação em Produção
+
+-   **🌐 Frontend:** https://nola-analytics.vercel.app
+-   **🔧 Backend API:** https://nola-analytics.onrender.com
 -   **💾 Database:** Neon PostgreSQL (500k+ registros)
 
 ### 📖 Guia de Deploy
 
-**Deploy rápido (25-30 minutos)**: [docs/DEPLOY_RAPIDO.md](./docs/DEPLOY_RAPIDO.md)
+**Passo a passo completo**: [docs/DEPLOY_RAPIDO.md](./docs/DEPLOY_RAPIDO.md)
 
-Inclui passo a passo completo para:
-
-1. ✅ Deploy do Backend no Render
-2. ✅ Deploy do Frontend no Vercel
-3. ✅ Configuração de CORS e variáveis de ambiente
-4. ✅ Troubleshooting comum
+Deploy em 25-30 minutos incluindo:
+- Backend no Render
+- Frontend no Vercel  
+- Configuração de variáveis de ambiente
+- Troubleshooting
 
 ### 🔧 Variáveis de Ambiente
 
-#### Backend (Render)
-
+#### Backend
 ```bash
-DB_HOST=your-neon-host.neon.tech
-DB_PORT=5432
+DB_HOST=<neon-host>
 DB_NAME=nola_analytics
 DB_USER=neondb_owner
-DB_PASSWORD=your-password
+DB_PASSWORD=<password>
 PORT=10000
 NODE_ENV=production
-FRONTEND_URL=https://your-frontend.vercel.app
+FRONTEND_URL=<vercel-url>
 VERCEL_PREVIEW_ENABLED=true
 ```
 
-#### Frontend (Vercel)
-
+#### Frontend
 ```bash
-VITE_API_URL=https://your-backend.onrender.com
+VITE_API_URL=<render-backend-url>
 ```
 
-### 🚀 Deploy Alternativo
-
-Aplicação pronta para deploy em:
-
--   **Frontend**: Netlify, Cloudflare Pages
--   **Backend**: Railway, Heroku, DigitalOcean App Platform
--   **Database**: Supabase, Railway, AWS RDS
+Ver [docs/DEPLOY_RAPIDO.md](./docs/DEPLOY_RAPIDO.md) para detalhes completos.
 
 ---
 
