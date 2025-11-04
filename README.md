@@ -10,6 +10,8 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 
+**🌐 [Ver Demo Live](https://nola-analytics.vercel.app) | 📚 [Documentação Completa](./docs/)**
+
 [Funcionalidades](#-funcionalidades) • [Quick Start](#-quick-start) • [Tecnologias](#-tecnologias) • [API](#-api-endpoints) • [Documentação](#-documentação)
 
 </div>
@@ -151,6 +153,22 @@ Combine múltiplos filtros para análises personalizadas da rede:
 ---
 
 ## 🎥 Demo
+
+### 🌐 Demo Online
+
+**✨ Acesse a aplicação em produção:**
+
+-   **Frontend:** https://nola-analytics.vercel.app
+-   **Backend API:** https://nola-analytics.onrender.com
+-   **Health Check:** https://nola-analytics.onrender.com/health
+
+> ⚠️ **Nota**: Primeira requisição pode demorar ~30s (cold start do plano gratuito do Render)
+
+### 📊 Stack de Deploy
+
+-   **Frontend:** Vercel (Deploy automático via GitHub)
+-   **Backend:** Render (Deploy automático via GitHub)
+-   **Database:** Neon PostgreSQL (Serverless, 500k+ registros)
 
 ### Interface Principal
 
@@ -409,20 +427,95 @@ cd frontend && npm install && npm run dev
 docker-compose up postgres -d
 ```
 
+### 🔒 Configuração de CORS
+
+O backend usa **CORS configurável via variáveis de ambiente** (sem hardcoding):
+
+```typescript
+// backend/src/index.ts
+const allowedOrigins: (string | RegExp)[] = [
+    'http://localhost:5173', // Vite dev
+    'http://localhost:3000', // Alternative port
+]
+
+if (process.env.FRONTEND_URL) {
+    allowedOrigins.push(process.env.FRONTEND_URL)
+}
+
+if (process.env.VERCEL_PREVIEW_ENABLED === 'true') {
+    allowedOrigins.push(/\.vercel\.app$/)
+}
+```
+
+**Benefícios:**
+
+-   ✅ Reutilizável por outros projetos
+-   ✅ Suporta múltiplos ambientes (dev, staging, production)
+-   ✅ Suporta preview deployments
+
+### 🗄️ Configuração SSL do Banco
+
+SSL é ativado automaticamente em produção:
+
+```typescript
+// backend/src/config/database.ts
+ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined
+```
+
 **Para instruções detalhadas, troubleshooting e testes**: Ver [docs/SETUP.md](./docs/SETUP.md)
 
 ---
 
 ## 🚢 Deploy
 
+### ✅ Aplicação em Produção
+
+A aplicação está rodando em produção:
+
+-   **🌐 Frontend:** [https://nola-analytics.vercel.app](https://nola-analytics.vercel.app) (Vercel)
+-   **🔧 Backend:** [https://nola-analytics.onrender.com](https://nola-analytics.onrender.com) (Render)
+-   **💾 Database:** Neon PostgreSQL (500k+ registros)
+
+### 📖 Guia de Deploy
+
+**Deploy rápido (25-30 minutos)**: [docs/DEPLOY_RAPIDO.md](./docs/DEPLOY_RAPIDO.md)
+
+Inclui passo a passo completo para:
+
+1. ✅ Deploy do Backend no Render
+2. ✅ Deploy do Frontend no Vercel
+3. ✅ Configuração de CORS e variáveis de ambiente
+4. ✅ Troubleshooting comum
+
+### 🔧 Variáveis de Ambiente
+
+#### Backend (Render)
+
+```bash
+DB_HOST=your-neon-host.neon.tech
+DB_PORT=5432
+DB_NAME=nola_analytics
+DB_USER=neondb_owner
+DB_PASSWORD=your-password
+PORT=10000
+NODE_ENV=production
+FRONTEND_URL=https://your-frontend.vercel.app
+VERCEL_PREVIEW_ENABLED=true
+```
+
+#### Frontend (Vercel)
+
+```bash
+VITE_API_URL=https://your-backend.onrender.com
+```
+
+### 🚀 Deploy Alternativo
+
 Aplicação pronta para deploy em:
 
--   **Docker Compose** (VPS/Cloud): `docker-compose up -d`
--   **Frontend**: Vercel, Netlify, Cloudflare Pages
--   **Backend**: Railway, Render, Heroku
--   **Database**: Supabase, Railway, DigitalOcean
-
-Para configuração específica de cada plataforma, consulte a documentação da plataforma escolhida.
+-   **Frontend**: Netlify, Cloudflare Pages
+-   **Backend**: Railway, Heroku, DigitalOcean App Platform
+-   **Database**: Supabase, Railway, AWS RDS
 
 ---
 
