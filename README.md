@@ -500,7 +500,7 @@ Ver [docs/DEPLOY_RAPIDO.md](./docs/DEPLOY_RAPIDO.md) para detalhes completos.
 
 ### Nota Final
 
-A plataforma Railway não mais permite deploys de graça. A alternativa que encontrei foi o Neon. Como o banco de dados é muito grande talvez o mesmo o deixe indisponível em algum momento por eu estar usando o plano grátis. Mas não encontrei uma alternativa grátis melhor.
+A plataforma Railway não mais permite deploys de graça. A alternativa que encontrei foi o Neon. Como o banco de dados é muito grande talvez o mesmo o deixe indisponível em algum momento por eu estar usando o plano grátis. Mas não encontrei uma alternativa grátis melhor. No caso de isso acontecer, solicito encarecidamente que testem a aplicação localmente. As instruções para tal estão nos documentos.
 
 
 ## 📄 Licença
