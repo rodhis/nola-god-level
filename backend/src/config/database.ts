@@ -12,6 +12,14 @@ const pool = new Pool({
     max: 20,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 2000,
+    // SSL configuration for production (Neon requires SSL)
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined,
+})
+
+console.log('🔌 Database connection configured:', {
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    ssl: process.env.NODE_ENV === 'production' ? 'enabled' : 'disabled',
 })
 
 pool.on('error', (err) => {
