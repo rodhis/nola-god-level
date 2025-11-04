@@ -498,9 +498,15 @@ Ver [docs/DEPLOY_RAPIDO.md](./docs/DEPLOY_RAPIDO.md) para detalhes completos.
 
 ---
 
-### Nota Final
+### Performance reduzida no deploy
 
-A plataforma Railway não mais permite deploys de graça. A alternativa que encontrei foi o Neon. Como o banco de dados é muito grande talvez o mesmo o deixe indisponível em algum momento por eu estar usando o plano grátis. Mas não encontrei uma alternativa grátis melhor. No caso de isso acontecer, solicito encarecidamente que testem a aplicação localmente. As instruções para tal estão nos documentos.
+A plataforma Railway, que seria a ideal para este projeto, não mais permite deploys de projetos inteiros no seu plano grátis. Desta forma, procurei anternativas.
+
+-  O plano grátis do Neon está em sua capacidade máxima pois o banco de dados do projeto é muito grande. Isto pode deixar o aplicativo indisponível em algum momento.
+-  O Render deixa o projeto em hibernação caso não esteja sendo requisitado. Isso significa que o primeiro carregamento pode demorar bastante. O ideal é fazer novos carregamentos após os dados aparecem na tela a primeira vez, ou seja, após o backend sair da hibernação (cold start).
+-  O Vercel não deve dar problemas de lentidão pois não há essas limitações no plano grátis e o Vite também agiliza o carregamento.
+
+Não encontrei alternativas grátis melhores. No caso de o projeto estar mais lento que o esperado/solicitado, peço encarecidamente que testem a aplicação localmente. As instruções para tal estão nos documentos.
 
 
 ## 📄 Licença
