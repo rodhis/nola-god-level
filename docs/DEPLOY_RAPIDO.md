@@ -61,9 +61,15 @@ DB_USER=neondb_owner
 DB_PASSWORD=npg_5cDouVRfAZx1
 PORT=10000
 NODE_ENV=production
+FRONTEND_URL=https://sua-url-do-vercel.vercel.app
+VERCEL_PREVIEW_ENABLED=true
 ```
 
-⚠️ **IMPORTANTE:** Render usa porta 10000 por padrão
+⚠️ **IMPORTANTE:**
+
+-   Render usa porta 10000 por padrão
+-   `FRONTEND_URL` deve ser preenchido após deploy do frontend (Passo 4 da Parte 2)
+-   `VERCEL_PREVIEW_ENABLED=true` permite que previews do Vercel funcionem
 
 ### Passo 4: Selecionar Plano Gratuito
 
@@ -127,32 +133,17 @@ VITE_API_URL=https://sua-url-do-render.onrender.com
 
 ## 🔧 Parte 3: Configurar CORS no Backend
 
-Depois que o frontend estiver no ar, atualize o CORS:
+Depois que o frontend estiver no ar, atualize a variável de ambiente do backend:
 
-1. Edite `backend/src/index.ts`
-2. Na linha do CORS, adicione a URL do Vercel:
-
-```typescript
-app.use(
-    cors({
-        origin: [
-            'http://localhost:3000',
-            'https://nola-analytics.vercel.app', // ← Sua URL do Vercel
-            /\.vercel\.app$/, // Aceita previews
-        ],
-    })
-)
-```
-
-3. Commit e push:
-
-```bash
-git add backend/src/index.ts
-git commit -m "fix: add vercel URL to CORS"
-git push origin main
-```
-
-Railway fará redeploy automaticamente!
+1. Vá ao dashboard do **Render**
+2. Clique no seu serviço de backend
+3. Vá em **Environment**
+4. Edite a variável `FRONTEND_URL` e coloque a URL do Vercel:
+    ```
+    FRONTEND_URL=https://nola-analytics.vercel.app
+    ```
+5. Clique em **Save Changes**
+6. O Render fará redeploy automaticamente
 
 ⚠️ **Nota sobre Render:** Redeploy pode demorar 3-5 minutos no plano gratuito.
 

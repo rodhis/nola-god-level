@@ -233,9 +233,35 @@ const pool = new Pool({
 #### CORS Configuration
 
 ```typescript
-// Basic CORS - permite frontend local
-app.use(cors())
+// Dynamic CORS - configurable via environment variables
+const allowedOrigins: (string | RegExp)[] = [
+    'http://localhost:5173', // Vite dev server
+    'http://localhost:3000', // Alternative dev port
+]
+
+// Add frontend URL from environment variable if provided
+if (process.env.FRONTEND_URL) {
+    allowedOrigins.push(process.env.FRONTEND_URL)
+}
+
+// Add Vercel preview regex if using Vercel
+if (process.env.VERCEL_PREVIEW_ENABLED === 'true') {
+    allowedOrigins.push(/\.vercel\.app$/)
+}
+
+app.use(cors({ origin: allowedOrigins, credentials: true }))
 ```
+
+**Variáveis de ambiente:**
+
+-   `FRONTEND_URL`: URL do frontend em produção (ex: `https://your-app.vercel.app`)
+-   `VERCEL_PREVIEW_ENABLED`: `true` para aceitar todos os previews do Vercel (`*.vercel.app`)
+
+**Benefícios:**
+
+-   ✅ Sem URLs hardcoded - reutilizável por outros projetos
+-   ✅ Suporta múltiplos ambientes (dev, staging, production)
+-   ✅ Suporta preview deployments do Vercel
 
 **Bibliotecas NÃO utilizadas (propositalmente):**
 

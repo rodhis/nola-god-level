@@ -114,6 +114,9 @@ DB_NAME=nola_restaurant
 DB_USER=postgres
 DB_PASSWORD=postgres
 PORT=3001
+NODE_ENV=development
+FRONTEND_URL=http://localhost:5173
+VERCEL_PREVIEW_ENABLED=false
 EOF
 
 # Modo desenvolvimento (hot reload)

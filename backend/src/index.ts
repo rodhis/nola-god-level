@@ -9,15 +9,25 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 3001
 
-// Configure CORS
+// Configure CORS origins
+const allowedOrigins: (string | RegExp)[] = [
+    'http://localhost:5173', // Vite dev server
+    'http://localhost:3000', // Alternative dev port
+]
+
+// Add frontend URL from environment variable if provided
+if (process.env.FRONTEND_URL) {
+    allowedOrigins.push(process.env.FRONTEND_URL)
+}
+
+// Add Vercel preview regex if using Vercel
+if (process.env.VERCEL_PREVIEW_ENABLED === 'true') {
+    allowedOrigins.push(/\.vercel\.app$/)
+}
+
 app.use(
     cors({
-        origin: [
-            'http://localhost:5173', // Vite dev server
-            'http://localhost:3000', // Alternative dev port
-            'https://nola-analytics.vercel.app', // Production frontend
-            /\.vercel\.app$/, // All Vercel preview deployments
-        ],
+        origin: allowedOrigins,
         credentials: true,
     })
 )
