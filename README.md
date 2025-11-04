@@ -415,9 +415,10 @@ docker-compose up postgres -d
 ### 🔒 Configuração
 
 **CORS configurável via ambiente** (sem hardcoding):
-- ✅ Reutilizável por outros projetos
-- ✅ Suporta múltiplos ambientes
-- ✅ Suporta preview deployments
+
+-   ✅ Reutilizável por outros projetos
+-   ✅ Suporta múltiplos ambientes
+-   ✅ Suporta preview deployments
 
 **SSL automático** em produção para banco de dados.
 
@@ -444,14 +445,16 @@ Ver [docs/ARQUITETURA.md](./docs/ARQUITETURA.md) para detalhes técnicos.
 **Passo a passo completo**: [docs/DEPLOY_RAPIDO.md](./docs/DEPLOY_RAPIDO.md)
 
 Deploy em 25-30 minutos incluindo:
-- Backend no Render
-- Frontend no Vercel  
-- Configuração de variáveis de ambiente
-- Troubleshooting
+
+-   Backend no Render
+-   Frontend no Vercel
+-   Configuração de variáveis de ambiente
+-   Troubleshooting
 
 ### 🔧 Variáveis de Ambiente
 
 #### Backend
+
 ```bash
 DB_HOST=<neon-host>
 DB_NAME=nola_analytics
@@ -464,6 +467,7 @@ VERCEL_PREVIEW_ENABLED=true
 ```
 
 #### Frontend
+
 ```bash
 VITE_API_URL=<render-backend-url>
 ```
