@@ -18,12 +18,16 @@ const allowedOrigins: (string | RegExp)[] = [
 // Add frontend URL from environment variable if provided
 if (process.env.FRONTEND_URL) {
     allowedOrigins.push(process.env.FRONTEND_URL)
+    console.log('✅ FRONTEND_URL configured:', process.env.FRONTEND_URL)
 }
 
 // Add Vercel preview regex if using Vercel
 if (process.env.VERCEL_PREVIEW_ENABLED === 'true') {
     allowedOrigins.push(/\.vercel\.app$/)
+    console.log('✅ Vercel preview deployments enabled')
 }
+
+console.log('🔒 CORS allowed origins:', allowedOrigins)
 
 app.use(
     cors({
